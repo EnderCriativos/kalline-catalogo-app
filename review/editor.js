@@ -65,6 +65,7 @@ function openCommentsEditor(pageId, selectedId = null, point = null) {
   const comment = (page.comments || []).find(c=>c.id===selectedId); reviewSelected = selectedId;
   reviewElement('p','Marcações de revisão: não aparecem no JSX nem na impressão. Coordenadas ficam presas à página, mesmo ao mover a página. Depois de trocar a grade, confira o ponto novamente.',dialog);
   const list = reviewElement('div', undefined, dialog); list.className='review-comments';
+  if(!(page.comments||[]).length)reviewElement('p','Nenhum comentário nesta página.',list).className='review-comments-empty';
   for(const c of page.comments || []) {
     const card=reviewElement('article', undefined, list); card.className=c.id===selectedId?'review-selected':'';
     reviewButton((c.resolved?'✓ Resolvido · ':'● Aberto · ')+c.text,card,()=>openCommentsEditor(pageId,c.id));
@@ -93,9 +94,26 @@ function openCommentsEditor(pageId, selectedId = null, point = null) {
         KallineReview.validate({...page,comments:next});commitPageReview(page,{comments:next});closeReviewDialog();renderAllPages();showToast('Comentário salvo na revisão.');
       }catch(error){status.textContent=error.message;}finally{save.disabled=false;}
     });
+    if(comment){
+      const remove=reviewButton('Excluir comentário',dialog,()=>{
+        if(save.disabled)return;
+        const current=reviewPage(),all=current?.comments||[],index=all.findIndex(c=>c.id===comment.id);
+        if(index<0)return;
+        if(!confirm('Excluir este comentário da revisão atual? Você poderá desfazer pelo histórico. As versões já salvas serão preservadas.'))return;
+        try{
+          const next=all.filter(c=>c.id!==comment.id);
+          commitPageReview(current,{comments:next});
+          reviewSelected=next[Math.min(index,next.length-1)]?.id||null;
+          renderAllPages();openCommentsEditor(pageId,reviewSelected);
+          showToast('Comentário excluído nesta revisão. Você pode desfazer pelo histórico. Clique em Salvar para guardar online.');
+        }catch(error){status.textContent=error.message;}
+      });
+      remove.className='review-delete-comment';const icon=document.createElement('i');icon.dataset.lucide='trash-2';icon.setAttribute('aria-hidden','true');remove.prepend(icon,document.createTextNode(' '));
+    }
     input.focus();
   }
   reviewButton('Fechar',dialog,closeReviewDialog); dialog.showModal();
+  globalThis.lucide?.createIcons();
   if(comment) dialog.querySelector('textarea')?.focus();
 }
 function renderReviewOverlay(page) {

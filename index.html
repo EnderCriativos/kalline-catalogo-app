@@ -1549,7 +1549,7 @@
       padding-top: 14px;
     }
 </style>
-  <link rel="stylesheet" href="review/editor.css?v=3fac8ee92d0d">
+  <link rel="stylesheet" href="review/editor.css?v=ddcd310a2206">
 <meta name="referrer" content="no-referrer"><link rel="stylesheet" href="neon-login.css?v=73051c5acd49"></head>
 <body>
 
@@ -1609,7 +1609,7 @@
     <div class="header-actions">
       <div id="userProfileBadge" class="user-profile-badge" style="display: none;">
         <i data-lucide="user-check" style="color: var(--accent-green); width: 14px; height: 14px;"></i>
-        <span>design.kalline</span>
+        <span>Sessão autenticada</span>
         <button onclick="handleLogout()" class="btn-logout" title="Encerrar Sessão">
           <i data-lucide="log-out" style="width: 12px; height: 12px;"></i>
         </button>
@@ -1813,7 +1813,7 @@
   <script>
 
     // ==========================================
-    // CLIENT AUTHENTICATION (design.kalline / Inverno@2027)
+    // Server-verified Neon authentication.
     // ==========================================
     let LOOKS_DATA=[],PLANO_107_PAGINAS_EXPANDIDO=[],PLANO_79_PAGINAS_REFINADO=[],INITIAL_PAGES=[],TREATED_PHOTO_FILES=new Set(),KNOWN_RAW_PHOTO_FILES=new Set(),NEON_PAGE_KEY='kalline_neon_uninitialized';
     function checkAuth(){return false;}
@@ -3412,6 +3412,6 @@ ${planJs}
     // INITIALIZATION
     window.onload=()=>window.dispatchEvent(new Event('kalline-editor-ready'));
   </script>
-  <script src="review/editor.js?v=f8ca81008daf"></script>
+  <script src="review/editor.js?v=112cf091a10c"></script>
 <script type="module" src="neon-client.js?v=c2e7af846048"></script></body>
 </html>
