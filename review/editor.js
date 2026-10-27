@@ -97,9 +97,14 @@ function openCommentsEditor(pageId, selectedId = null, point = null) {
     if(comment){
       const remove=reviewButton('Excluir comentário',dialog,()=>{
         if(save.disabled)return;
+        confirmation.hidden=false;remove.hidden=true;save.disabled=true;confirmRemove.focus();
+      });
+      remove.className='review-delete-comment';const icon=document.createElement('i');icon.dataset.lucide='trash-2';icon.setAttribute('aria-hidden','true');remove.prepend(icon,document.createTextNode(' '));
+      const confirmation=reviewElement('section',undefined,dialog);confirmation.hidden=true;confirmation.setAttribute('aria-label','Confirmar exclusão do comentário');
+      reviewElement('p','Excluir este comentário da revisão atual? Você poderá desfazer pelo histórico. As versões já salvas serão preservadas.',confirmation);
+      const confirmRemove=reviewButton('Confirmar exclusão',confirmation,()=>{
         const current=reviewPage(),all=current?.comments||[],index=all.findIndex(c=>c.id===comment.id);
         if(index<0)return;
-        if(!confirm('Excluir este comentário da revisão atual? Você poderá desfazer pelo histórico. As versões já salvas serão preservadas.'))return;
         try{
           const next=all.filter(c=>c.id!==comment.id);
           commitPageReview(current,{comments:next});
@@ -108,7 +113,8 @@ function openCommentsEditor(pageId, selectedId = null, point = null) {
           showToast('Comentário excluído nesta revisão. Você pode desfazer pelo histórico. Clique em Salvar para guardar online.');
         }catch(error){status.textContent=error.message;}
       });
-      remove.className='review-delete-comment';const icon=document.createElement('i');icon.dataset.lucide='trash-2';icon.setAttribute('aria-hidden','true');remove.prepend(icon,document.createTextNode(' '));
+      confirmRemove.className='review-delete-comment';
+      reviewButton('Cancelar exclusão',confirmation,()=>{confirmation.hidden=true;remove.hidden=false;save.disabled=false;remove.focus();});
     }
     input.focus();
   }

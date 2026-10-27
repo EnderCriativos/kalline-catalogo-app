@@ -7,6 +7,7 @@
 
 .canvas-clean-mode .review-overlay{display:none}
 .review-dialog .review-delete-comment{display:inline-flex;align-items:center;gap:6px;min-height:44px;background:#862b40;border-color:#f59bb0;color:#fff}.review-dialog .review-delete-comment:hover{background:#a02d49}.review-delete-comment svg{width:15px;height:15px;stroke-width:2.2}.review-comments-empty{padding:12px;border:1px dashed #747b87;border-radius:7px;color:#cbd0d8}
+.review-dialog .review-delete-comment[hidden]{display:none}
 
 /* Layout controls and review actions have independent rows at every page width. */
 .page-toolbar{container-type:inline-size}.page-toolbar .toolbar-layout-row{flex-direction:column;align-items:stretch;gap:8px}
