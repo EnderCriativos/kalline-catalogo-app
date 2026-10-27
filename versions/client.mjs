@@ -5,7 +5,7 @@ const stable = value => Array.isArray(value) ? '[' + value.map(stable).join(',')
 export class SharedVersions {
   constructor({ getPlan, applyPlan, confirmLoad, fetchImpl = (url, options) => globalThis.fetch(url, options), storage = sessionStorage, randomId = () => crypto.randomUUID(), changed = () => {} }) {
     Object.assign(this, { getPlan, applyPlan, confirmLoad, fetchImpl, storage, randomId, changed });
-    this.currentKey = 'kalline_neon_current_' + globalThis.KALLINE_AUTH_USER_ID; this.storageKey = 'kalline_neon_pending_' + globalThis.KALLINE_AUTH_USER_ID; this.baseline = null; this.parentId = null; this.versions = [];
+    this.currentKey = 'kalline_neon_current_' + globalThis.KALLINE_STORAGE_SCOPE; this.storageKey = 'kalline_neon_pending_' + globalThis.KALLINE_STORAGE_SCOPE; this.baseline = null; this.parentId = null; this.versions = [];
     try { const current=JSON.parse(storage.getItem(this.currentKey)||'null'); if(current&&typeof current.baseline==='string'&&/^(v_[a-f0-9]{32}|base_[a-f0-9]{16})$/.test(current.parentId)){this.baseline=current.baseline;this.parentId=current.parentId;} } catch {}
     try { this.pending = JSON.parse(storage.getItem(this.storageKey) || 'null'); } catch { this.pending = null; }
   }
