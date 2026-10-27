@@ -1549,7 +1549,7 @@
       padding-top: 14px;
     }
 </style>
-  <link rel="stylesheet" href="review/editor.css?v=115c0e561122">
+  <link rel="stylesheet" href="review/editor.css?v=3fac8ee92d0d">
 <meta name="referrer" content="no-referrer"><link rel="stylesheet" href="neon-login.css?v=73051c5acd49"></head>
 <body>
 
@@ -1643,8 +1643,8 @@
     <!-- DRAWER / SIDEBAR WITH ALL LOOKS -->
     <aside class="studio-sidebar" id="sidebar">
       <div class="sidebar-header">
-        <span class="sidebar-title">👗 Mix de Looks Kalline</span>
-        <button class="btn-tool-icon" onclick="toggleSidebar()">✕</button>
+        <span class="sidebar-title"><i data-lucide="layers" aria-hidden="true"></i> Mix de Looks Kalline</span>
+        <button class="btn-tool-icon" onclick="toggleSidebar()" aria-label="Fechar catálogo"><i data-lucide="x" aria-hidden="true"></i></button>
       </div>
       <div class="sidebar-search">
         <input type="text" id="lookSearchInput" class="search-box" placeholder="Buscar por nome, ref ou número..." oninput="filterSidebarLooks()">
@@ -1668,24 +1668,24 @@
     <div class="modal-dialog">
       <div class="modal-header">
         <div class="modal-title">
-          <span>🖼️ Escolher Foto para: </span>
+          <span><i data-lucide="image" aria-hidden="true"></i> Escolher Foto para: </span>
           <span id="pickerSlotTargetName" style="color:#ffffff;"></span>
         </div>
         <button class="btn-close-modal" onclick="closePhotoPickerModal()">&times;</button>
       </div>
       <div class="modal-body">
         <div>
-          <div class="picker-section-title">⭐ Fotos Tratadas do Look (Recomendadas)</div>
+          <div class="picker-section-title"><i data-lucide="sparkles" aria-hidden="true"></i> Fotos Tratadas do Look (Recomendadas)</div>
           <div class="picker-photos-grid" id="pickerTratadasGrid"></div>
         </div>
 
         <div>
-          <div class="picker-section-title">📁 Tomadas Adicionais do Ensaio (Fotos Brutas)</div>
+          <div class="picker-section-title"><i data-lucide="folder-open" aria-hidden="true"></i> Tomadas Adicionais do Ensaio (Fotos Brutas)</div>
           <div class="picker-photos-grid" id="pickerTodasGrid"></div>
         </div>
 
         <div style="margin-top: 10px; border-top: 1px solid var(--border-color); padding-top: 14px;">
-          <div class="picker-section-title">✏️ Ou Digitar Nome do Arquivo Manualmente</div>
+          <div class="picker-section-title"><i data-lucide="pencil" aria-hidden="true"></i> Ou Digitar Nome do Arquivo Manualmente</div>
           <div style="display:flex; gap:8px;">
             <input type="text" id="manualFilenameInput" class="search-box" placeholder="Nome original do arquivo.jpg" style="flex:1;">
             <button class="btn btn-primary" onclick="applyManualFilename()">Aplicar</button>
@@ -1703,7 +1703,7 @@
     <div class="modal-dialog" style="max-width: 580px;">
       <div class="modal-header">
         <div class="modal-title">
-          <span>📖 Desdobrar Look na Sequência</span>
+          <span><i data-lucide="book-open" aria-hidden="true"></i> Desdobrar Look na Sequência</span>
         </div>
         <button class="btn-close-modal" onclick="closeDesdobrarModal()">&times;</button>
       </div>
@@ -1721,7 +1721,7 @@
     <div class="modal-dialog" style="max-width: 580px;">
       <div class="modal-header">
         <div class="modal-title">
-          <span>➕ Inserir Nova Página no Catálogo</span>
+          <span><i data-lucide="file-plus-2" aria-hidden="true"></i> Inserir Nova Página no Catálogo</span>
         </div>
         <button class="btn-close-modal" onclick="closeInsertModal()">&times;</button>
       </div>
@@ -1771,7 +1771,7 @@
       </div>
       <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:10px; padding:14px 20px; border-top:1px solid var(--border-color);">
         <button class="btn btn-secondary" onclick="closeInsertModal()" style="padding:7px 16px;">Cancelar</button>
-        <button class="btn btn-primary" onclick="confirmInsertPage()" style="padding:7px 20px;">➕ Inserir Página</button>
+        <button class="btn btn-primary" onclick="confirmInsertPage()" style="padding:7px 20px;"><i data-lucide="plus" aria-hidden="true"></i> Inserir Página</button>
       </div>
     </div>
   </div>
@@ -1781,7 +1781,7 @@
     <div class="modal-dialog" style="max-width: 950px;">
       <div class="modal-header">
         <div class="modal-title">
-          <span>⚡ Script InDesign ExtendScript (.jsx) Pronto</span>
+          <span><i data-lucide="zap" aria-hidden="true"></i> Script InDesign ExtendScript (.jsx) Pronto</span>
         </div>
         <button class="btn-close-modal" onclick="closeJsxExportModal()">&times;</button>
       </div>
@@ -1796,9 +1796,9 @@
         <div class="code-export-box" id="jsxCodeView"></div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="copyJsxToClipboard()">📋 Copiar Código JSX</button>
-        <button class="btn btn-secondary" onclick="copyIaPromptInstruction()">🤖 Copiar Instrução para IA</button>
-        <button class="btn btn-primary" onclick="downloadJsxFile()">📥 Baixar Script (.jsx)</button>
+        <button class="btn btn-secondary" onclick="copyJsxToClipboard()"><i data-lucide="copy" aria-hidden="true"></i> Copiar Código JSX</button>
+        <button class="btn btn-secondary" onclick="copyIaPromptInstruction()"><i data-lucide="bot" aria-hidden="true"></i> Copiar Instrução para IA</button>
+        <button class="btn btn-primary" onclick="downloadJsxFile()"><i data-lucide="download" aria-hidden="true"></i> Baixar Script (.jsx)</button>
       </div>
     </div>
   </div>
@@ -1922,7 +1922,7 @@
         if (b2) b2.classList.remove('active');
         saveState();
         renderAllPages();
-        showToast('✨ Catálogo Refinado Ativado: 79 páginas com 0 costas sozinhas!');
+        showToast('Catálogo Refinado Ativado: 79 páginas com 0 costas sozinhas!');
       } else {
         pages = JSON.parse(JSON.stringify(PLANO_107_PAGINAS_EXPANDIDO));
         const b1 = document.getElementById('btnPresetRefinado');
@@ -1931,7 +1931,7 @@
         if (b2) b2.classList.add('active');
         saveState();
         renderAllPages();
-        showToast('📦 Catálogo Expandido Ativado: 107 páginas');
+        showToast('Catálogo Expandido Ativado: 107 páginas');
       }
     }
 
@@ -2336,7 +2336,7 @@
         optionsHtml += `
           <div class="look-side-card" style="border-color:var(--accent-blue);" onclick="executeDesdobrar(${pageIdx}, 'baixo_2col')">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-weight:700; color:var(--accent-blue);">👖 Opção 1: Peça de Baixo (${look.name2})</span>
+              <span style="font-weight:700; color:var(--accent-blue);"><i data-lucide="shirt" aria-hidden="true"></i> Opção 1: Peça de Baixo (${look.name2})</span>
               <span class="look-seq-pill">GRID 2 COLUNAS</span>
             </div>
             <div style="font-size:0.75rem; color:var(--text-muted);">
@@ -2350,7 +2350,7 @@
       optionsHtml += `
         <div class="look-side-card" style="border-color:var(--accent-purple);" onclick="executeDesdobrar(${pageIdx}, 'estourada')">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight:700; color:var(--accent-purple);">💥 Opção 2: Detalhe Estourado (Página Inteira)</span>
+            <span style="font-weight:700; color:var(--accent-purple);"><i data-lucide="maximize" aria-hidden="true"></i> Opção 2: Detalhe Estourado (Página Inteira)</span>
             <span class="look-seq-pill">1 FOTO FULL</span>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted);">
@@ -2362,7 +2362,7 @@
       optionsHtml += `
         <div class="look-side-card" onclick="executeDesdobrar(${pageIdx}, 'look3_duplicado')">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight:700; color:var(--accent-gold);">🔲 Opção 3: Grid 3 Fotos Alternativas</span>
+            <span style="font-weight:700; color:var(--accent-gold);"><i data-lucide="columns-3" aria-hidden="true"></i> Opção 3: Grid 3 Fotos Alternativas</span>
             <span class="look-seq-pill">GRID 3 FOTOS</span>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted);">
@@ -2587,7 +2587,7 @@
           <div class="photo-slot ${customClass}" onclick="openPhotoPicker('${page.id}', '${slotKey}', '${slotLabel}')" ondragover="handleSlotDragOver(event)" ondrop="handleSlotDrop(event, '${page.id}', '${slotKey}')">
             <span class="slot-badge">${slotLabel}</span>
             <div class="slot-empty-content">
-              <span class="slot-empty-icon">➕</span>
+              <span class="slot-empty-icon"><i data-lucide="image-plus" aria-hidden="true"></i></span>
               <span>Escolher Foto</span>
             </div>
           </div>
@@ -2606,13 +2606,13 @@
             <span class="slot-file-label">${filename}</span>
             <div style="display:flex; gap:6px;">
               <button class="slot-action-btn" onclick="event.stopPropagation(); openPhotoPicker('${page.id}', '${slotKey}', '${slotLabel}')">
-                🔄 Trocar
+                <i data-lucide="replace" aria-hidden="true"></i> Trocar
               </button>
               <button class="slot-action-btn" onclick="cycleSlotPosition('${page.id}', '${slotKey}', event)" title="Ajustar Enquadramento (Topo/Centro/Baixo)">
-                ↕️ ${pos.toUpperCase()}
+                <i data-lucide="move-vertical" aria-hidden="true"></i> ${pos.toUpperCase()}
               </button>
               <button class="slot-action-btn" onclick="clearSlotPhoto('${page.id}', '${slotKey}', event)" title="Remover Foto">
-                ✕
+                <i data-lucide="x" aria-hidden="true"></i>
               </button>
             </div>
           </div>
@@ -2733,32 +2733,32 @@
             </div>
 
             <!-- Linha 2: Troca de Grade e Desdobro / Inserção -->
-            <div class="toolbar-row">
+            <div class="toolbar-row toolbar-layout-row">
               <div class="toolbar-row-left">
                 <div class="grid-pills">
                   <button class="grid-pill-btn ${page.type === 'look3' ? 'active' : ''}" onclick="changePageGrid('${page.id}', 'look3')" title="3 Fotos: Hero na Esquerda (58%) + 2 Fotos na Direita (40%)">
-                    3 ESQ
+                    <i data-lucide="panel-left" aria-hidden="true"></i><span>3 ESQ</span>
                   </button>
                   <button class="grid-pill-btn ${page.type === 'look3_right' ? 'active' : ''}" onclick="changePageGrid('${page.id}', 'look3_right')" title="3 Fotos: 2 Fotos na Esquerda (40%) + Hero na Direita (58%)">
-                    3 DIR
+                    <i data-lucide="panel-right" aria-hidden="true"></i><span>3 DIR</span>
                   </button>
                   <button class="grid-pill-btn ${page.type === '2col' ? 'active' : ''}" onclick="changePageGrid('${page.id}', '2col')" title="Grid 2 Colunas Verticais">
-                    2 COL
+                    <i data-lucide="columns-2" aria-hidden="true"></i><span>2 COL</span>
                   </button>
                   <button class="grid-pill-btn ${page.type === '3col' ? 'active' : ''}" onclick="changePageGrid('${page.id}', '3col')" title="Grid 3 Colunas Verticais">
-                    3 COL
+                    <i data-lucide="columns-3" aria-hidden="true"></i><span>3 COL</span>
                   </button>
                   <button class="grid-pill-btn ${page.type === 'quad4' ? 'active' : ''}" onclick="changePageGrid('${page.id}', 'quad4')" title="Grid 4 Fotos (Mosaico 2x2)">
-                    4 FOTOS
+                    <i data-lucide="grid-2x2" aria-hidden="true"></i><span>4 FOTOS</span>
                   </button>
                   <button class="grid-pill-btn ${page.type === 'estourada' ? 'active' : ''}" onclick="changePageGrid('${page.id}', 'estourada')" title="Detalhe Estourado Full Page">
-                    1 FULL
+                    <i data-lucide="square" aria-hidden="true"></i><span>1 FULL</span>
                   </button>
                 </div>
               </div>
               <div class="toolbar-row-right">
-                <button class="btn-tool-insert-small" onclick="openPiecesEditor('${page.id}')">Peças / referências</button>
-                <button class="btn-tool-insert-small" onclick="openCommentsEditor('${page.id}')">Comentários (${(page.comments || []).filter(c => !c.resolved).length})</button>
+                <button class="btn-tool-insert-small" onclick="openPiecesEditor('${page.id}')"><i data-lucide="tags" aria-hidden="true"></i> Peças / referências</button>
+                <button class="btn-tool-insert-small" onclick="openCommentsEditor('${page.id}')"><i data-lucide="message-square" aria-hidden="true"></i> Comentários (${(page.comments || []).filter(c => !c.resolved).length})</button>
                 <button class="btn-tool-insert-small" onclick="openInsertModal(${idx})" title="Inserir nova página após esta">
                   <i data-lucide="plus-circle"></i> Inserir
                 </button>
@@ -2797,7 +2797,7 @@
             html += `
               <div class="page-insert-strip" onclick="openInsertModal(${idx})" title="Clique para inserir uma nova página aqui entre Pág ${idx + 1} e Pág ${idx + 2}">
                 <div class="insert-divider-line"></div>
-                <div class="insert-pill">➕ Inserir página entre Pág ${idx + 1} e Pág ${idx + 2}</div>
+                <div class="insert-pill"><i data-lucide="plus" aria-hidden="true"></i> Inserir página entre Pág ${idx + 1} e Pág ${idx + 2}</div>
                 <div class="insert-divider-line"></div>
               </div>
             `;
@@ -2842,7 +2842,7 @@
           html += `
             <div class="page-insert-strip" onclick="openInsertModal(${lastSpreadIdx})" title="Clique para inserir uma nova página aqui entre Pág ${lastSpreadIdx + 1} e Pág ${lastSpreadIdx + 2}">
               <div class="insert-divider-line"></div>
-              <div class="insert-pill">➕ Inserir página entre Pág ${lastSpreadIdx + 1} e Pág ${lastSpreadIdx + 2}</div>
+              <div class="insert-pill"><i data-lucide="plus" aria-hidden="true"></i> Inserir página entre Pág ${lastSpreadIdx + 1} e Pág ${lastSpreadIdx + 2}</div>
               <div class="insert-divider-line"></div>
             </div>
           `;
@@ -2882,7 +2882,7 @@
           <div class="look-side-ref">${l.ref1} ${l.name2 ? ' • ' + l.name2 : ''}</div>
           <div class="look-side-actions">
             <button class="btn-side-add" onclick="addNewPage(null, createDefaultPageForLook(getLookBySeq(${l.seq})))">
-              ➕ Nova Página
+              <i data-lucide="plus" aria-hidden="true"></i> Nova Página
             </button>
           </div>
         </div>
@@ -3376,7 +3376,7 @@ ${planJs}
     let sharedVersionsPanel = null;
     function initializeSharedVersions() {
       // The server controls shared-version identity. Local editor login/storage is never used as API authorization.
-      import('./versions/panel.mjs?v=8b37560de4b3').then(({ mountVersionPanel }) => {
+      import('./versions/panel.mjs?v=8b69fc79745f').then(({ mountVersionPanel }) => {
         if (sharedVersionsPanel) return;
         sharedVersionsPanel = mountVersionPanel({
           toolbar: document.querySelector('.header-actions'),

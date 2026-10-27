@@ -25,9 +25,26 @@ export function mountVersionPanel({ toolbar, getPlan, applyPlan, confirmLoad }) 
     warning.addEventListener('cancel',()=>done(false),{once:true});warning.showModal();warning.querySelector('button').focus();
   });
   const client=new SharedVersions({getPlan,applyPlan,confirmLoad:confirmLoad||confirmChange,changed:render});
+  let savingNow=false,quickError='',returnTarget=button;
+  const shortcuts=make('div');shortcuts.className='version-shortcuts';
+  const shortcut=(id,label,icon)=>{const b=make('button');b.type='button';b.id=id;b.className='btn btn-version-pink';const glyph=make('i');glyph.dataset.lucide=icon;glyph.setAttribute('aria-hidden','true');b.append(glyph,make('span',label));return b;};
+  const newVersion=shortcut('newVersionButton','Nova versão','file-plus-2'),quickSave=shortcut('saveCatalogButton','Salvar','save');
+  quickSave.title='Salvar cria uma nova versão preservada. Nenhuma versão anterior é sobrescrita.';
+  const quickStatus=make('span','Identificando versão…');quickStatus.id='catalogSaveStatus';quickStatus.className='quick-save-status';quickStatus.setAttribute('role','status');quickStatus.setAttribute('aria-live','polite');
+  shortcuts.append(newVersion,quickSave,quickStatus);
+  const newPage=[...toolbar.querySelectorAll('button')].find(b=>b.getAttribute('onclick')?.includes('addNewPage'));
+  if(newPage)newPage.after(shortcuts);else toolbar.append(shortcuts);
+  function updateShortcutState(){
+    const selected=client.versions.find(v=>v.id===client.parentId),busy=savingNow||client.saving;
+    newVersion.disabled=busy;quickSave.disabled=busy;save.disabled=busy;
+    quickSave.querySelector('span').textContent=busy?'Salvando…':'Salvar';
+    const state=busy?'saving':quickError?'error':client.pending||client.isDirty()?'dirty':selected?.readOnly?'base':selected?'saved':'local';
+    quickStatus.dataset.state=state;
+    quickStatus.textContent=busy?'Confirmando no servidor…':quickError?'Não salvo: '+quickError:client.pending?'Gravação pendente — tente Salvar novamente':state==='dirty'?'Alterações pendentes':state==='base'?'Base preservada':state==='saved'?'Salvo no servidor':'Plano local';
+  }
   function render(){
     const selected=client.versions.find(v=>v.id===client.parentId);current.textContent='Em edição: '+(selected?.name||'Plano local — origem ainda não identificada')+(client.isDirty()?' · com alterações locais':'');
-    save.textContent=client.pending?'Confirmar tentativa pendente':'Salvar nova versão';name.disabled=!!client.pending;name.required=!client.pending;list.replaceChildren();
+    save.textContent=client.pending?'Confirmar tentativa pendente':'Salvar nova versão';name.disabled=!!client.pending||savingNow;name.required=!client.pending;list.replaceChildren();updateShortcutState();
     if(!client.versions.length)list.append(make('li','Nenhuma versão retornada. O plano local continua preservado.'));
     for(const v of client.versions){
       const item=make('li');item.className='version-card'+(v.id===client.parentId?' is-current':'');
@@ -47,15 +64,27 @@ export function mountVersionPanel({ toolbar, getPlan, applyPlan, confirmLoad }) 
       if(stable(normalized)===currentPlan&&stable(getPlan())===currentPlan){client.parentId=v.id;client.baseline=currentPlan;client.rememberCurrent();return;}
     }
   }
-  async function refreshList(){
+  async function refreshList(passive=false){
+    const wasEngaged=client.engaged;
     status.textContent='Buscando versões…';
-    try{await client.connect();login.hidden=true;form.hidden=false;await client.refresh();await identifyPreservedBase();render();status.textContent='Lista atualizada.';}
-    catch(error){status.textContent=error.message;form.hidden=error.code==='SIGN_IN_REQUIRED';login.hidden=!form.hidden;}
+    try{await client.connect();login.hidden=true;form.hidden=false;await client.refresh();await identifyPreservedBase();render();status.textContent='Lista atualizada.';return true;}
+    catch(error){status.textContent=error.message;quickError=error.message;updateShortcutState();form.hidden=error.code==='SIGN_IN_REQUIRED';login.hidden=!form.hidden;return false;}
+    finally{if(passive===true&&!wasEngaged&&!client.pending)client.engaged=false;}
   }
-  const returnFocus=()=>{const menu=document.getElementById('catalogActionsMenu');if(menu&&menu.hidden)document.getElementById('catalogActionsTrigger')?.focus();else button.focus();};
-  button.addEventListener('click',()=>{dialog.showModal();render();refreshList();close.focus();});
+  const returnFocus=()=>{if(returnTarget!==button&&returnTarget?.isConnected)returnTarget.focus();else{const menu=document.getElementById('catalogActionsMenu');if(menu&&menu.hidden)document.getElementById('catalogActionsTrigger')?.focus();else button.focus();}};
+  async function openVersions(fresh=false,opener=button){returnTarget=opener;if(!dialog.open)dialog.showModal();render();close.focus();await refreshList();if(dialog.open&&fresh){if(!client.pending)name.value='';name.focus();}}
+  async function performSave(versionName){
+    if(savingNow||client.saving)return;savingNow=true;quickError='';status.textContent='Confirmando gravação…';updateShortcutState();
+    try{const v=await client.save(versionName);if(!client.versions.some(item=>item.id===v.id))client.versions.unshift(v);status.textContent='Versão salva: '+v.name;await client.refresh().catch(()=>{});render();return v;}
+    catch(error){quickError=error.message;status.textContent=error.message;render();}
+    finally{savingNow=false;updateShortcutState();}
+  }
+  button.addEventListener('click',()=>openVersions());
+  newVersion.addEventListener('click',()=>openVersions(true,newVersion));
+  quickSave.addEventListener('click',async()=>{if(savingNow||client.saving)return;if(!await refreshList()){await openVersions(false,quickSave);return;}if(client.pending){await performSave(client.pending.body.name);return;}const selected=client.versions.find(v=>v.id===client.parentId);if(!selected||selected.readOnly){await openVersions(true,quickSave);return;}if(!client.isDirty()){quickError='';updateShortcutState();return;}await performSave(selected.name);});
   close.addEventListener('click',()=>dialog.close());dialog.addEventListener('close',returnFocus);refresh.addEventListener('click',refreshList);
-  form.addEventListener('submit',async event=>{event.preventDefault();save.disabled=true;status.textContent='Confirmando gravação…';try{const v=await client.save(name.value);status.textContent='Versão salva: '+v.name;render();await client.refresh().catch(()=>{});}catch(error){status.textContent=error.message;render();}finally{save.disabled=false;}});
+  form.addEventListener('submit',async event=>{event.preventDefault();await performSave(name.value);});
+  const dirtyTimer=setInterval(()=>{if(!document.hidden)updateShortcutState();},800);refreshList(true);globalThis.lucide?.createIcons();
   const unload=e=>client.beforeUnload(e);window.addEventListener('beforeunload',unload);dialog.addEventListener('close',()=>client.stopPolling());dialog.addEventListener('toggle',()=>{if(dialog.open&&!document.hidden)client.startPolling();else client.stopPolling();});document.addEventListener('visibilitychange',()=>{if(dialog.open&&!document.hidden)client.startPolling();else client.stopPolling();});
-  return{client,destroy(){client.stopPolling();window.removeEventListener('beforeunload',unload);button.remove();dialog.remove();warning.remove();}};
+  return{client,destroy(){clearInterval(dirtyTimer);client.stopPolling();window.removeEventListener('beforeunload',unload);shortcuts.remove();button.remove();dialog.remove();warning.remove();}};
 }
