@@ -1,0 +1,3417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ender.Catálogos • Estúdio Editorial InDesign</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Lucide Icons Library (Desktop Vector UI) -->
+  <style>
+    @font-face {
+      font-family: 'Venti CF';
+      src: local('Venti CF Bold'), local('VentiCF-Bold');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'Venti CF';
+      src: local('Venti CF Medium'), local('VentiCF-Medium');
+      font-weight: 500;
+    }
+
+    :root {
+      /* ADOBE INDESIGN DARK THEME PALETTE */
+      --bg-studio: #202020;
+      --bg-surface: #2b2b2b;
+      --bg-surface-elevated: #363636;
+      --bg-input: #1a1a1a;
+      --border-color: #3e3e3e;
+      --border-subtle: #333333;
+      --border-focus: #1473e6;
+      --accent-id: #ea3880;
+      --accent-id-hover: #ff4d94;
+      --accent-id-glow: rgba(234, 56, 128, 0.3);
+      --accent-adobe-blue: #1473e6;
+      --accent-adobe-blue-hover: #2680eb;
+      --accent-gold: #d4af37;
+      --accent-gold-light: #f3e5ab;
+      --accent-green: #2d9d78;
+      --accent-rose: #ea3880;
+      --text-main: #f5f5f5;
+      --text-muted: #ababab;
+      --text-dim: #767676;
+      
+      --page-scale: 0.75;
+      /* Exata proporção A4/* Exata proporção A4 do InDesign: 595.28 x 841.89 pt */
+      --page-w: calc(595.28px * var(--page-scale));
+      --page-h: calc(841.89px * var(--page-scale));
+      --page-bg: #ffffff;
+      --page-text: #111111;
+      --page-subtext: #444444;
+      --page-border: #e2e8f0;
+      
+      --font-catalog: 'Venti CF', 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background-color: var(--bg-studio);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    /* TOP APP BAR */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(11, 13, 20, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      border-left: 1px solid var(--border-color);
+      padding-left: 12px;
+      text-transform: uppercase;
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .view-toggle {
+      display: flex;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 3px;
+    }
+
+    .view-toggle button {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .view-toggle button.active {
+      background: var(--accent-gold);
+      color: #0b0d14;
+      box-shadow: 0 2px 8px var(--accent-gold-glow);
+    }
+
+    .zoom-controls {
+      display: flex;
+      align-items: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 2px 8px;
+      gap: 6px;
+    }
+
+    .zoom-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 4px 6px;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+    .zoom-btn:hover { color: var(--text-main); }
+    .zoom-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      min-width: 44px;
+      text-align: center;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #d4af37, #b89128);
+      color: #0b0d14;
+      font-weight: 700;
+      box-shadow: 0 4px 14px var(--accent-gold-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.45);
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+    .btn-secondary:hover {
+      background: var(--bg-surface-elevated);
+      border-color: var(--text-muted);
+    }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+    .history-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .history-count { font-size: 0.68rem; color: var(--text-muted); white-space: nowrap; }
+    .grid-overflow-note { font-size: 0.68rem; color: var(--text-muted); }
+
+    .btn-jsx {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+    }
+    .btn-jsx:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+    }
+
+    /* MAIN APP WORKSPACE */
+    .studio-layout {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 61px);
+      overflow: hidden;
+      position: relative;
+      min-height: 0;
+    }
+
+    /* SIDEBAR (MIX LOOKS & STATS) */
+    .studio-sidebar {
+      width: 340px;
+      flex-shrink: 0;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), margin-left 0.3s;
+      z-index: 40;
+    }
+
+    .studio-sidebar.collapsed {
+      margin-left: -340px;
+    }
+
+    .sidebar-header {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-search {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .search-box {
+      width: 100%;
+      background: #0b0d14;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 12px;
+      color: var(--text-main);
+      font-size: 0.8rem;
+      font-family: var(--font-sans);
+      outline: none;
+    }
+    .search-box:focus { border-color: var(--accent-gold); }
+
+    .looks-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .look-side-card {
+      background: #0f121b;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .look-side-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateX(3px);
+      background: #141824;
+    }
+
+    .look-side-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .look-seq-pill {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: var(--bg-surface-elevated);
+      color: var(--accent-gold);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .look-side-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .look-side-ref {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .look-side-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .btn-side-add {
+      flex: 1;
+      background: #1e2538;
+      border: none;
+      color: #cbd5e1;
+      padding: 4px 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-side-add:hover {
+      background: var(--accent-gold);
+      color: #000;
+    }
+
+    /* CANVAS VIEWPORT */
+    .studio-canvas-wrap {
+      flex: 1;
+      min-width: 0;
+      background: #07080c;
+      overflow: auto;
+      padding: 40px 20px 120px 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .canvas-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+      width: 100%;
+      max-width: 1600px;
+    }
+
+    /* SPREAD (DUPLA DE PÁGINAS) */
+    .spread-row {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 0;
+      position: relative;
+      width: calc(var(--page-w) * 2);
+      max-width: calc(var(--page-w) * 2);
+      min-width: calc(var(--page-w) * 2);
+      margin: 0 auto;
+    }
+
+    .spread-row.single-cover {
+      justify-content: flex-end;
+    }
+
+    /* Realistic book gutter crease */
+    .spread-crease {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 24px;
+      margin-left: -12px;
+      pointer-events: none;
+      z-index: 10;
+      background: linear-gradient(90deg, 
+        rgba(0,0,0,0.18) 0%, 
+        rgba(0,0,0,0.06) 30%, 
+        rgba(0,0,0,0.3) 50%, 
+        rgba(0,0,0,0.06) 70%, 
+        rgba(0,0,0,0.18) 100%);
+    }
+
+    /* PAGE CARD (LOOKBOOK PAGE) */
+    .page-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: var(--page-w);
+      min-width: var(--page-w);
+      max-width: var(--page-w);
+      flex: 0 0 var(--page-w);
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .page-toolbar {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      box-sizing: border-box;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 6px 8px;
+      gap: 6px;
+      font-size: 0.75rem;
+    }
+
+    .toolbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      box-sizing: border-box;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-row-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .toolbar-row-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .page-num-pill {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.72rem;
+      color: var(--accent-gold);
+      background: #0b0d14;
+      padding: 3px 7px;
+      border-radius: 5px;
+      border: 1px solid #1f2537;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .page-look-select {
+      background: #0b0d14;
+      border: 1px solid #2a344d;
+      color: var(--text-main);
+      padding: 4px 8px;
+      font-size: 0.72rem;
+      border-radius: 5px;
+      font-weight: 600;
+      outline: none;
+      flex: 1;
+      min-width: 0;
+      max-width: 210px;
+      cursor: pointer;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .page-look-select:focus { border-color: var(--accent-gold); }
+
+    .grid-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px;
+      background: #0b0d14;
+      padding: 2px;
+      border-radius: 6px;
+      border: 1px solid #1f2537;
+    }
+
+    .grid-pill-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 3px 6px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .grid-pill-btn:hover {
+      color: var(--text-main);
+      background: #1b2133;
+    }
+    .grid-pill-btn.active {
+      background: var(--accent-gold);
+      color: #000;
+      font-weight: 700;
+    }
+
+    .page-tools {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .btn-tool-icon {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 3px 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      line-height: 1;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-tool-icon:hover {
+      color: var(--text-main);
+      background: #1e2538;
+      border-color: #2d374d;
+    }
+
+    .btn-tool-delete {
+      color: #f87171;
+    }
+    .btn-tool-delete:hover {
+      color: #fff !important;
+      background: #dc2626 !important;
+      border-color: #ef4444 !important;
+    }
+
+    .btn-tool-insert-small {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+      padding: 3px 7px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .btn-tool-insert-small:hover {
+      background: #38bdf8;
+      color: #0b0f19;
+    }
+
+    .btn-desdobrar {
+      background: rgba(197, 160, 89, 0.15);
+      border: 1px solid rgba(197, 160, 89, 0.4);
+      color: var(--accent-gold);
+      padding: 3px 7px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .btn-desdobrar:hover {
+      background: var(--accent-gold);
+      color: #000;
+    }
+
+    /* THE PRINT-ACCURATE A4 LOOKBOOK PAGE */
+    .lookbook-page {
+      width: var(--page-w);
+      height: var(--page-h);
+      background-color: var(--page-bg);
+      color: var(--page-text);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.65), 0 0 0 1px var(--page-border);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      /* Margens exatas do InDesign: 36pt (0.5 inch / 12.7mm) nas laterais e topo */
+      padding: calc(36px * var(--page-scale)) calc(36px * var(--page-scale)) calc(38px * var(--page-scale)) calc(36px * var(--page-scale));
+      overflow: hidden;
+      user-select: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .lookbook-page.page-left {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      box-shadow: -8px 16px 40px rgba(0,0,0,0.5), inset -8px 0 16px rgba(0,0,0,0.05);
+    }
+
+    .lookbook-page.page-right {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      box-shadow: 8px 16px 40px rgba(0,0,0,0.5), inset 8px 0 16px rgba(0,0,0,0.05);
+    }
+
+    /* GRID CONTAINER */
+    .page-photo-grid {
+      flex: 1;
+      width: 100%;
+      height: 87.5%;
+      position: relative;
+    }
+
+    /* GRID TYPE 1: CLÁSSICO 3 FOTOS (PROPORÇÕES EXATAS DO INDESIGN: 58.42% ESQ / 40.25% DIR) */
+    .grid-look3 {
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+    }
+
+    .grid-look3 .col-left {
+      width: 58.42%;
+      height: 100%;
+    }
+
+    .grid-look3 .col-left .photo-slot {
+      width: 100%;
+      height: 100%;
+    }
+
+    .grid-look3 .col-right {
+      width: 40.25%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .grid-look3 .col-right .slot-top-right {
+      width: 100%;
+      height: 54.28%;
+    }
+
+    .grid-look3 .col-right .slot-bottom-right {
+      width: 100%;
+      height: 44.67%;
+    }
+
+    /* GRID TYPE 1B: 3 FOTOS COM HERO NA DIREITA (40.25% ESQ / 58.42% DIR) */
+    .grid-look3-right {
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+    }
+
+    .grid-look3-right .col-left {
+      width: 40.25%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .grid-look3-right .col-left .slot-top-left {
+      width: 100%;
+      height: 54.28%;
+    }
+
+    .grid-look3-right .col-left .slot-bottom-left {
+      width: 100%;
+      height: 44.67%;
+    }
+
+    .grid-look3-right .col-right {
+      width: 58.42%;
+      height: 100%;
+    }
+
+    .grid-look3-right .col-right .photo-slot {
+      width: 100%;
+      height: 100%;
+    }
+
+        /* GRID TYPE 2: 2 COLUNAS VERTICAIS (DUPLA DE PARTE DE BAIXO) */
+    .grid-2col {
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+    }
+
+    .grid-2col .photo-slot {
+      width: calc(50% - 3.5px);
+      height: 100%;
+    }
+
+    /* GRID TYPE 2B: 3 COLUNAS VERTICAIS (PARTE DE BAIXO COM 3 FOTOS) */
+    .grid-3col {
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+    }
+
+    .grid-3col .photo-slot {
+      width: calc(33.333% - 4.6px);
+      height: 100%;
+    }
+
+
+    /* GRID TYPE 3: ESTOURADA / FULL BLEED */
+    .grid-estourada {
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
+
+    .grid-estourada .photo-slot {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* GRID TYPE 4: 4 FOTOS MOSAICO */
+    .grid-quad4 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 7px;
+      height: 100%;
+      width: 100%;
+    }
+
+    /* PHOTO BOX SLOT */
+    .photo-slot {
+      position: relative;
+      background: #f1f3f5;
+      border-radius: 0;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
+      transition: filter 0.15s ease;
+    }
+
+    .photo-slot:hover {
+      box-shadow: inset 0 0 0 2px var(--accent-gold);
+    }
+
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+    .photo-slot img[hidden] { display: none; }
+
+    /* Slot Badge Overlay - Minimalista e Discreto para Realismo Editorial */
+    .slot-badge {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background: rgba(15, 20, 32, 0.50);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      color: rgba(241, 245, 249, 0.85);
+      font-size: 0.50rem;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      padding: 1.5px 5px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.12);
+      z-index: 2;
+      text-transform: uppercase;
+      pointer-events: none;
+      opacity: 0.40;
+      transition: opacity 0.15s ease, background 0.15s ease;
+    }
+
+    .photo-slot:hover .slot-badge {
+      opacity: 0.95;
+      background: rgba(15, 20, 32, 0.85);
+    }
+
+    /* Modo Impresso Limpo (Oculta badges e placeholders para ver o lookbook puro) */
+    .canvas-clean-mode .slot-badge {
+      display: none !important;
+    }
+    .canvas-clean-mode .slot-empty-content {
+      opacity: 0.25;
+    }
+
+    /* Slot Hover Toolbar */
+    .slot-actions-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(11, 15, 26, 0.65);
+      backdrop-filter: blur(2px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 5;
+    }
+
+    .photo-slot:hover .slot-actions-overlay {
+      opacity: 1;
+    }
+
+    .slot-action-btn {
+      background: var(--bg-surface-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: all 0.15s;
+    }
+
+    .slot-action-btn:hover {
+      background: var(--accent-gold);
+      color: #000;
+      border-color: var(--accent-gold);
+      transform: scale(1.05);
+    }
+
+    .slot-file-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: #94a3b8;
+      background: rgba(0,0,0,0.6);
+      padding: 2px 6px;
+      border-radius: 3px;
+      max-width: 90%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* EMPTY SLOT PLACEHOLDER */
+    .slot-empty-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: #94a3b8;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .slot-empty-icon {
+      font-size: 1.5rem;
+      opacity: 0.6;
+    }
+
+    /* PAGE FOOTER - PADRÃO EXATO DO TEMPLATE INDESIGN KALLINE */
+    .page-editorial-footer {
+      margin-top: auto;
+      padding-top: calc(14px * var(--page-scale) / 0.75);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-family: var(--font-catalog);
+      min-height: calc(28px * var(--page-scale) / 0.75);
+    }
+
+    .footer-row-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-height: calc(13px * var(--page-scale) / 0.75);
+    }
+
+    .footer-left-group {
+      display: flex;
+      align-items: center;
+      gap: calc(7px * var(--page-scale) / 0.75);
+    }
+
+    .kalline-brasao-wrap {
+      width: calc(15px * var(--page-scale) / 0.75);
+      height: calc(15px * var(--page-scale) / 0.75);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .kalline-brasao-spacer {
+      width: calc(15px * var(--page-scale) / 0.75);
+      height: calc(15px * var(--page-scale) / 0.75);
+      flex-shrink: 0;
+    }
+
+    .kalline-brasao-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .footer-piece-line {
+      display: flex;
+      align-items: baseline;
+      font-size: calc(7.5px * var(--page-scale) / 0.75); /* Proporção exata do 10pt do InDesign */
+      letter-spacing: 0.25em; /* Tracking 250 do InDesign */
+      text-transform: uppercase;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+
+    .footer-piece-name {
+      font-weight: 700; /* Venti CF Bold */
+      color: #111111;
+    }
+
+    .footer-piece-code {
+      font-weight: 500; /* Venti CF Medium */
+      color: #444444;
+    }
+
+    .footer-right-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-size-line {
+      display: flex;
+      align-items: center;
+      font-size: calc(7.5px * var(--page-scale) / 0.75); /* Proporção exata do 10pt do InDesign */
+      letter-spacing: 0.25em; /* Tracking 250 */
+      font-weight: 700; /* Venti CF Bold */
+      color: #111111;
+      text-transform: uppercase;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+
+    .footer-hairline {
+      display: inline-block;
+      width: 0.75px;
+      height: calc(11px * var(--page-scale) / 0.75);
+      background: #888888;
+      margin-right: calc(6px * var(--page-scale) / 0.75);
+      opacity: 0.5;
+    }
+
+    
+    /* INSERT BETWEEN PAGES STRIP */
+    .page-insert-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: calc(var(--page-w) * 2 + 30px);
+      margin: 8px auto;
+      cursor: pointer;
+      opacity: 0.35;
+      transition: all 0.2s ease;
+      padding: 6px 0;
+    }
+    .page-insert-strip:hover {
+      opacity: 1;
+    }
+    .insert-divider-line {
+      flex: 1;
+      height: 1px;
+      border-top: 1px dashed var(--accent-gold);
+    }
+    .insert-pill {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      background: #131722;
+      border: 1px solid var(--accent-gold);
+      border-radius: 20px;
+      padding: 5px 16px;
+      white-space: nowrap;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+      transition: all 0.15s;
+    }
+    .page-insert-strip:hover .insert-pill {
+      transform: scale(1.05);
+      background: var(--accent-gold);
+      color: #000;
+    }
+
+    .btn-tool-insert {
+      background: rgba(197, 160, 89, 0.15) !important;
+      color: var(--accent-gold) !important;
+      font-weight: 700 !important;
+      border: 1px solid rgba(197, 160, 89, 0.35) !important;
+      padding: 3px 8px !important;
+      border-radius: 5px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      font-size: 0.68rem !important;
+    }
+    .btn-tool-insert:hover {
+      background: var(--accent-gold) !important;
+      color: #000 !important;
+    }
+
+    .grid-choice-card.active {
+      border-color: var(--accent-gold) !important;
+      background: rgba(197, 160, 89, 0.15) !important;
+    }
+
+    /* PHOTO PICKER DRAWER / MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-dialog {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 900px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalFadeIn {
+      from { transform: scale(0.96) translateY(10px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+      border-radius: 4px;
+    }
+    .btn-close-modal:hover { color: var(--text-main); }
+
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .picker-section-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .picker-photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .picker-photo-card {
+      background: #0f121b;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .picker-photo-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+    }
+
+    .picker-photo-card.selected {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 2px var(--accent-gold);
+    }
+
+    .picker-thumb-wrap {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: #000;
+      position: relative;
+    }
+
+    .picker-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-preview-message {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.7rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      background: var(--bg-surface);
+      pointer-events: none;
+    }
+
+    .picker-slot-tag {
+      position: absolute;
+      z-index: 1;
+      bottom: 4px;
+      left: 4px;
+      background: rgba(11, 15, 26, 0.85);
+      color: var(--accent-gold);
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    .picker-file-name {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      padding: 6px 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: #0b0d14;
+    }
+
+    /* JSX EXPORT CODE VIEW */
+    .code-export-box {
+      background: #07090e;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #93c5fd;
+      line-height: 1.5;
+      height: 380px;
+      overflow: auto;
+      white-space: pre;
+    }
+
+    .modal-footer {
+      padding: 14px 20px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #0f121b;
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg-surface-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--accent-gold);
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      animation: toastIn 0.2s ease;
+    }
+
+    @keyframes toastIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1200px) {
+      .spread-row {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+      }
+      .spread-crease { display: none; }
+      .spread-row.single-cover { justify-content: center; }
+    }
+  
+    .header-actions { flex-wrap: wrap; }
+    @media (max-width: 700px) {
+      .app-header { padding: 8px 12px; gap: 8px; }
+      .brand-section { flex-wrap: wrap; gap: 8px; }
+      .brand-sub { display: none; }
+      .top-controls, .header-actions { gap: 6px; }
+      .view-toggle button { padding: 6px 8px; }
+      .header-actions .btn { padding: 7px 9px; font-size: 0.7rem; }
+      .studio-sidebar { position: absolute; inset: 0 auto 0 0; width: min(340px, 100%); }
+      .studio-sidebar.collapsed { transform: translateX(-100%); margin-left: 0; }
+      .studio-canvas-wrap { padding: 16px 12px 60px; align-items: flex-start; }
+      .canvas-container { width: max(100%, var(--page-w)); }
+      .spread-row { align-items: flex-start; }
+      .modal-overlay { padding: 12px; }
+      .modal-dialog { max-height: 95dvh; }
+      .modal-footer { flex-wrap: wrap; padding: 10px; }
+      .modal-title { font-size: 0.85rem; }
+      .jsx-root-field { flex-wrap: wrap; }
+      .jsx-root-field input { min-width: 0; flex-basis: 100% !important; }
+      .login-gate { padding: 12px; overflow-y: auto; }
+    }
+
+    /* ADOBE INDESIGN UI ELEMENTS */
+    [data-lucide], .lucide {
+      width: 14px;
+      height: 14px;
+      stroke-width: 2.2;
+      display: inline-block;
+      vertical-align: -2px;
+    }
+    .btn [data-lucide], .btn .lucide {
+      margin-right: 5px;
+    }
+
+    .brand-badge-id {
+      background: #ea3880;
+      color: #ffffff;
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 3px 7px;
+      border-radius: 4px;
+      letter-spacing: -0.5px;
+      box-shadow: 0 0 10px rgba(234, 56, 128, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #1e1e1e;
+      border: 1px solid #383838;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      color: #d0d0d0;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: none;
+      color: #888888;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: all 0.15s;
+    }
+    .btn-logout:hover {
+      color: #ea3880;
+      background: rgba(234, 56, 128, 0.15);
+    }
+
+    /* LOGIN SCREEN / GATE */
+    .login-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(18, 18, 18, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: #282828;
+      border: 1px solid #444444;
+      border-radius: 12px;
+      padding: 32px 30px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 1px rgba(255, 255, 255, 0.2) inset;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      animation: loginFadeIn 0.3s ease-out;
+    }
+
+    @keyframes loginFadeIn {
+      from { opacity: 0; transform: scale(0.96) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .login-brand-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .login-brand-titles h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    .login-brand-titles span {
+      font-size: 0.72rem;
+      color: #999999;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .login-project-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #1e1e1e;
+      border: 1px solid #383838;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.78rem;
+      color: #cccccc;
+    }
+
+    .login-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .login-field label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #b0b0b0;
+      text-transform: uppercase;
+    }
+
+    .input-with-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-with-icon .input-icon {
+      position: absolute;
+      left: 12px;
+      color: #888888;
+      pointer-events: none;
+    }
+
+    .input-with-icon input {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid #444444;
+      border-radius: 6px;
+      padding: 10px 12px 10px 38px;
+      font-size: 0.88rem;
+      color: #ffffff;
+      outline: none;
+      transition: all 0.15s;
+    }
+
+    .input-with-icon input:focus {
+      border-color: #1473e6;
+      box-shadow: 0 0 0 2px rgba(20, 115, 230, 0.25);
+    }
+
+    .login-error {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(234, 56, 128, 0.15);
+      border: 1px solid rgba(234, 56, 128, 0.4);
+      color: #ff85b3;
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      margin-bottom: 14px;
+    }
+
+    .btn-login-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #ea3880 0%, #c42265 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 11px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(234, 56, 128, 0.4);
+      transition: all 0.15s;
+    }
+
+    .btn-login-submit:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 6px 20px rgba(234, 56, 128, 0.55);
+    }
+
+    .login-card-footer {
+      text-align: center;
+      font-size: 0.68rem;
+      color: #777777;
+      letter-spacing: 0.5px;
+      border-top: 1px solid #383838;
+      padding-top: 14px;
+    }
+</style>
+  <link rel="stylesheet" href="review/editor.css">
+<meta name="referrer" content="no-referrer"><link rel="stylesheet" href="neon-login.css"></head>
+<body>
+
+<div id="loginGate" class="login-gate" style="display:flex"><section class="login-card" aria-label="Entrar no catálogo"><h1>Kalline · Inverno 2027</h1><p>Entre para revisar o catálogo e salvar versões.</p><form id="neonEmailForm"><label for="neonEmail">E-mail autorizado</label><input id="neonEmail" type="email" autocomplete="email" required><button type="submit">Enviar código</button></form><form id="neonOtpForm" hidden><label for="neonOtp">Código recebido por e-mail</label><input id="neonOtp" inputmode="numeric" autocomplete="one-time-code" required><button type="submit">Entrar</button></form><button id="neonImportButton" type="button" hidden>Preparar prévias privadas</button><p id="neonLoginStatus" role="status">Conferindo sessão…</p></section></div>
+  <!-- TOP APP HEADER -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="brand-badge-id">Id</div>
+      <div class="brand-title">
+        <span>Ender<span style="color:var(--accent-id);">.Catálogos</span></span>
+      </div>
+      <div class="brand-sub">Kalline • Inverno 2027</div>
+      <button class="btn btn-secondary" onclick="toggleSidebar()" style="padding: 5px 10px; font-size: 0.72rem;">
+        <i data-lucide="layers"></i> Catálogo (<span id="totalLooksCount">62</span>)
+      </button>
+    </div>
+
+    <div class="top-controls">
+      <div class="history-controls" role="group" aria-label="Histórico de edições"
+        title="Até 10 edições nesta aba. Recarregar mantém o plano salvo e limpa o histórico.">
+        <button id="btnUndo" type="button" class="btn btn-secondary" onclick="undoEdit()" disabled
+          aria-label="Desfazer edição" aria-keyshortcuts="Control+Z Meta+Z" title="Desfazer edição (Ctrl/Cmd+Z)">
+          <i data-lucide="undo-2"></i> Desfazer
+        </button>
+        <button id="btnRedo" type="button" class="btn btn-secondary" onclick="redoEdit()" disabled
+          aria-label="Refazer edição" aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y" title="Refazer edição (Ctrl/Cmd+Shift+Z ou Ctrl+Y)">
+          <i data-lucide="redo-2"></i> Refazer
+        </button>
+        <span id="historyStatus" class="history-count" role="status" aria-live="polite">Desfazer: 0/10 · Refazer: 0</span>
+      </div>
+      <div class="view-toggle preset-selector-toggle" style="background: rgba(0,0,0,0.35); border: 1px solid var(--border-color); border-radius: 6px; padding: 2px;">
+        
+        
+      </div>
+
+      <div class="view-toggle">
+        <button id="btnViewSpread" class="active" onclick="setViewMode('spread')">
+          <i data-lucide="book-open"></i> Modo Revista
+        </button>
+        <button id="btnViewSingle" onclick="setViewMode('single')">
+          <i data-lucide="file-text"></i> Sequencial
+        </button>
+      </div>
+
+      <div class="zoom-controls">
+        <button class="zoom-btn" onclick="adjustZoom(-0.1)" title="Diminuir Zoom"><i data-lucide="minus"></i></button>
+        <span class="zoom-label" id="zoomLabel">75%</span>
+        <button class="zoom-btn" onclick="adjustZoom(0.1)" title="Aumentar Zoom"><i data-lucide="plus"></i></button>
+        <button class="zoom-btn" onclick="setZoom(0.75)" title="Resetar 75%"><i data-lucide="rotate-cw"></i></button>
+      </div>
+
+      <button id="btnToggleCleanMode" class="btn btn-secondary" onclick="toggleCleanMode()" style="padding: 5px 12px; font-size: 0.72rem; font-weight: 600;" title="Alternar entre visualização editorial limpa e modo de edição">
+        <i data-lucide="eye"></i> Modo Impresso
+      </button>
+    </div>
+
+    <div class="header-actions">
+      <div id="userProfileBadge" class="user-profile-badge" style="display: none;">
+        <i data-lucide="user-check" style="color: var(--accent-green); width: 14px; height: 14px;"></i>
+        <span>design.kalline</span>
+        <button onclick="handleLogout()" class="btn-logout" title="Encerrar Sessão">
+          <i data-lucide="log-out" style="width: 12px; height: 12px;"></i>
+        </button>
+      </div>
+
+      <button class="btn btn-secondary" onclick="addNewPage()" title="Adicionar nova página ao final">
+        <i data-lucide="plus"></i> Nova Página
+      </button>
+      <button class="btn btn-jsx" onclick="openJsxExportModal()" title="Gerar e Exportar Script InDesign .jsx">
+        <i data-lucide="zap"></i> Exportar InDesign (.jsx)
+      </button>
+      <button class="btn btn-secondary" onclick="downloadJsonPlan()" title="Salvar e baixar arquivo JSON do catálogo para compartilhar com a equipe">
+        <i data-lucide="download"></i> Salvar JSON
+      </button>
+      <button class="btn btn-secondary" onclick="document.getElementById('jsonFileInput').click()" title="Carregar plano salvo por outra pessoa (arquivo .json)">
+        <i data-lucide="upload"></i> Carregar JSON
+      </button>
+      <input type="file" id="jsonFileInput" accept=".json" onchange="handleJsonFileSelect(event)" style="display:none;" />
+      <button class="btn btn-secondary" onclick="exportJsonPlan()" title="Copiar plano JSON para área de transferência">
+        <i data-lucide="copy"></i> Copiar JSON
+      </button>
+      <button class="btn btn-secondary" onclick="resetToPilot()" title="Restaurar as 79 páginas do Mix Feminino">
+        <i data-lucide="rotate-ccw"></i> Resetar
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN STUDIO LAYOUT -->
+  <div class="studio-layout">
+
+    <!-- DRAWER / SIDEBAR WITH ALL LOOKS -->
+    <aside class="studio-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-title">👗 Mix de Looks Kalline</span>
+        <button class="btn-tool-icon" onclick="toggleSidebar()">✕</button>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" id="lookSearchInput" class="search-box" placeholder="Buscar por nome, ref ou número..." oninput="filterSidebarLooks()">
+      </div>
+      <div class="looks-list" id="sidebarLooksList">
+        <!-- Rendered by JS -->
+      </div>
+    </aside>
+
+    <!-- WORKSPACE CANVAS VIEWPORT -->
+    <main class="studio-canvas-wrap" id="canvasWrap">
+      <div class="canvas-container" id="pagesCanvas">
+        <!-- Pages rendered dynamically here -->
+      </div>
+    </main>
+
+  </div>
+
+  <!-- MODAL: PHOTO PICKER / SELECTOR -->
+  <div class="modal-overlay" id="photoPickerModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>🖼️ Escolher Foto para: </span>
+          <span id="pickerSlotTargetName" style="color:#ffffff;"></span>
+        </div>
+        <button class="btn-close-modal" onclick="closePhotoPickerModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="picker-section-title">⭐ Fotos Tratadas do Look (Recomendadas)</div>
+          <div class="picker-photos-grid" id="pickerTratadasGrid"></div>
+        </div>
+
+        <div>
+          <div class="picker-section-title">📁 Tomadas Adicionais do Ensaio (Fotos Brutas)</div>
+          <div class="picker-photos-grid" id="pickerTodasGrid"></div>
+        </div>
+
+        <div style="margin-top: 10px; border-top: 1px solid var(--border-color); padding-top: 14px;">
+          <div class="picker-section-title">✏️ Ou Digitar Nome do Arquivo Manualmente</div>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="manualFilenameInput" class="search-box" placeholder="Nome original do arquivo.jpg" style="flex:1;">
+            <button class="btn btn-primary" onclick="applyManualFilename()">Aplicar</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closePhotoPickerModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DESDOBRAR LOOK (SMART EXPANSION) -->
+  <div class="modal-overlay" id="desdobrarModal">
+    <div class="modal-dialog" style="max-width: 580px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>📖 Desdobrar Look na Sequência</span>
+        </div>
+        <button class="btn-close-modal" onclick="closeDesdobrarModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="desdobrarModalBody">
+        <!-- Rendered dynamically based on look pieces -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeDesdobrarModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- MODAL: INSERIR PÁGINA ENTRE PÁGINAS -->
+  <div class="modal-overlay" id="insertPageModal">
+    <div class="modal-dialog" style="max-width: 580px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>➕ Inserir Nova Página no Catálogo</span>
+        </div>
+        <button class="btn-close-modal" onclick="closeInsertModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 18px 20px;">
+        <div style="font-size:0.82rem; color:var(--text-muted); margin-bottom:14px; line-height:1.4;">
+          A nova página será inserida logo após a <b id="insertModalPageLabel" style="color:var(--accent-gold);">Página X</b> (entre as páginas existentes). Todas as páginas seguintes serão renumeradas automaticamente.
+        </div>
+        
+        <div style="margin-bottom:16px;">
+          <label style="font-size:0.75rem; font-weight:700; color:var(--text-main); display:block; margin-bottom:6px; letter-spacing:0.5px;">SELECIONE O LOOK:</label>
+          <select id="insertModalLookSelect" style="width:100%; padding:9px 12px; background:#0b0d14; border:1px solid var(--border-color); color:var(--text-main); border-radius:6px; font-size:0.85rem; outline:none;">
+          </select>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="font-size:0.75rem; font-weight:700; color:var(--text-main); display:block; margin-bottom:8px; letter-spacing:0.5px;">GRID / FORMATO DA PÁGINA:</label>
+          <div class="grid-choice-cards" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px;">
+            <div class="grid-choice-card active" data-grid="look3" onclick="selectInsertGrid('look3', this)" style="border:1px solid #2a344d; border-radius:8px; padding:10px 12px; cursor:pointer; background:#161c2c; transition:all 0.15s;">
+              <div style="font-weight:700; font-size:0.82rem; color:var(--text-main); margin-bottom:2px;">3 FOTOS (ESQ)</div>
+              <div style="font-size:0.70rem; color:var(--text-muted);">Hero 58% na Esquerda + 2 Fotos</div>
+            </div>
+            <div class="grid-choice-card" data-grid="look3_right" onclick="selectInsertGrid('look3_right', this)" style="border:1px solid #2a344d; border-radius:8px; padding:10px 12px; cursor:pointer; background:#161c2c; transition:all 0.15s;">
+              <div style="font-weight:700; font-size:0.82rem; color:var(--text-main); margin-bottom:2px;">3 FOTOS (DIR)</div>
+              <div style="font-size:0.70rem; color:var(--text-muted);">Hero 58% na Direita + 2 Fotos</div>
+            </div>
+            <div class="grid-choice-card" data-grid="2col" onclick="selectInsertGrid('2col', this)" style="border:1px solid #2a344d; border-radius:8px; padding:10px 12px; cursor:pointer; background:#161c2c; transition:all 0.15s;">
+              <div style="font-weight:700; font-size:0.82rem; color:var(--text-main); margin-bottom:2px;">2 COLUNAS</div>
+              <div style="font-size:0.70rem; color:var(--text-muted);">Desdobro de saia / calça</div>
+            </div>
+            <div class="grid-choice-card" data-grid="quad4" onclick="selectInsertGrid('quad4', this)" style="border:1px solid #2a344d; border-radius:8px; padding:10px 12px; cursor:pointer; background:#161c2c; transition:all 0.15s;">
+              <div style="font-weight:700; font-size:0.82rem; color:var(--text-main); margin-bottom:2px;">4 FOTOS (2x2)</div>
+              <div style="font-size:0.70rem; color:var(--text-muted);">Grade 2x2 equilibrada</div>
+            </div>
+            <div class="grid-choice-card" data-grid="estourada" onclick="selectInsertGrid('estourada', this)" style="border:1px solid #2a344d; border-radius:8px; padding:10px 12px; cursor:pointer; background:#161c2c; transition:all 0.15s;">
+              <div style="font-weight:700; font-size:0.82rem; color:var(--text-main); margin-bottom:2px;">DETALHE ESTOURADO</div>
+              <div style="font-size:0.70rem; color:var(--text-muted);">Foto única página inteira</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:6px;">
+          <label style="display:flex; align-items:center; gap:8px; font-size:0.8rem; color:var(--text-main); cursor:pointer;">
+            <input type="checkbox" id="insertModalAutoFill" checked style="accent-color:var(--accent-gold); width:15px; height:15px;">
+            Preencher fotos automaticamente a partir do acervo do look
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:10px; padding:14px 20px; border-top:1px solid var(--border-color);">
+        <button class="btn btn-secondary" onclick="closeInsertModal()" style="padding:7px 16px;">Cancelar</button>
+        <button class="btn btn-primary" onclick="confirmInsertPage()" style="padding:7px 20px;">➕ Inserir Página</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: INDESIGN JSX SCRIPT EXPORT -->
+  <div class="modal-overlay" id="jsxExportModal">
+    <div class="modal-dialog" style="max-width: 950px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>⚡ Script InDesign ExtendScript (.jsx) Pronto</span>
+        </div>
+        <button class="btn-close-modal" onclick="closeJsxExportModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px;">
+          Este script foi gerado em tempo real com base no seu layout visual atual. Ao executá-lo no InDesign (ou via IA), ele abrirá o template, duplicará as páginas, aplicará os grids (3 fotos, 2 colunas, estouradas, 4 fotos), posicionará as fotos e formatará os textos e legendas!
+        </div>
+        <div class="jsx-root-field" style="margin-bottom:10px; display:flex; gap:10px; align-items:center; background:rgba(255,255,255,0.03); padding:8px 12px; border-radius:6px; border:1px solid var(--border-color);">
+          <label style="font-size:0.75rem; color:var(--accent-gold); white-space:nowrap; font-weight:600;">Pasta Raiz do Projeto (InDesign):</label>
+          <input type="text" id="jsxRootInput" value="" style="flex:1; background:var(--bg-card); border:1px solid var(--border-color); color:var(--text-main); font-family:var(--font-mono); font-size:0.75rem; padding:6px 10px; border-radius:4px;" oninput="updateJsxCodePreview()" />
+        </div>
+        <div class="code-export-box" id="jsxCodeView"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="copyJsxToClipboard()">📋 Copiar Código JSX</button>
+        <button class="btn btn-secondary" onclick="copyIaPromptInstruction()">🤖 Copiar Instrução para IA</button>
+        <button class="btn btn-primary" onclick="downloadJsxFile()">📥 Baixar Script (.jsx)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-box" id="toast">
+    <span id="toastMsg">Mensagem</span>
+  </div>
+
+  <!-- APP SCRIPTS & DATA -->
+  <script src="review/model.js"></script>
+  <script>
+
+    // ==========================================
+    // CLIENT AUTHENTICATION (design.kalline / Inverno@2027)
+    // ==========================================
+    let LOOKS_DATA=[],PLANO_107_PAGINAS_EXPANDIDO=[],PLANO_79_PAGINAS_REFINADO=[],INITIAL_PAGES=[],TREATED_PHOTO_FILES=new Set(),KNOWN_RAW_PHOTO_FILES=new Set(),NEON_PAGE_KEY='kalline_neon_uninitialized';
+    function checkAuth(){return false;}
+    function handleLogout(){window.NeonPilot.signOut();}
+    function isRawPhotoSlot(slot) {
+      return slot?.source === 'raw' || (!slot?.source && KNOWN_RAW_PHOTO_FILES.has(slot?.file) && !TREATED_PHOTO_FILES.has(slot.file));
+    }
+
+
+    function getPhotoUrl(filename,isTratada=true){return window.NeonPilot.photoUrl(filename,isTratada);}
+    function getAbsoluteFallbackUrl(filename,isTratada=true){return getPhotoUrl(filename,isTratada);}
+    function handlePhotoLoadError(img, fallbackUrl) {
+      // HTTP previews and their fallback can point to the same missing asset.
+      // Try a distinct local fallback once, then retain the filename and plan.
+      if (!img.dataset.fallbackTried && new URL(fallbackUrl, location.href).href !== img.src) {
+        img.dataset.fallbackTried = 'true';
+        img.src = fallbackUrl;
+        return;
+      }
+      img.onerror = null;
+      img.hidden = true;
+      const message = document.createElement('span');
+      message.className = 'photo-preview-message';
+      message.textContent = 'Prévia indisponível neste ambiente. O nome do arquivo foi mantido.';
+      message.title = img.alt;
+      img.parentElement.appendChild(message);
+    }
+
+    // State
+    let currentScale = 0.75;
+    let viewMode = 'spread'; // 'spread' or 'single'
+    let pages = [];
+    let activeEditingSlot = null; // { pageId, slotKey, lookNum }
+
+    // At most ten reversible plan operations, in memory only. Snapshots contain
+    // plan JSON (filenames/positions/pieces), never copies of image files.
+    const HISTORY_LIMIT = 10;
+    let undoStack = [];
+    let redoStack = [];
+    let currentPlanSnapshot = null;
+
+    function planFingerprint(plan) {
+      // Imported JSON can reorder object keys without changing the plan.
+      return JSON.stringify(plan, (key, value) => {
+        if (!value || typeof value !== 'object' || Array.isArray(value)) return value;
+        return Object.fromEntries(Object.keys(value).sort().map(name => [name, value[name]]));
+      });
+    }
+
+    function updateHistoryControls() {
+      document.getElementById('btnUndo').disabled = undoStack.length === 0;
+      document.getElementById('btnRedo').disabled = redoStack.length === 0;
+      document.getElementById('historyStatus').textContent = `Desfazer: ${undoStack.length}/${HISTORY_LIMIT} · Refazer: ${redoStack.length}`;
+    }
+
+    function applyHistorySnapshot(snapshot) {
+      // Dialogs keep page indexes/slot references; close them before restoring.
+      closeReviewDialog();
+      closePhotoPickerModal();
+      closeInsertModal();
+      closeDesdobrarModal();
+      closeJsxExportModal();
+      draggedSlotData = null;
+      pages = JSON.parse(snapshot);
+      saveState(false);
+      renderAllPages(true);
+    }
+
+    function undoEdit() {
+      if (!undoStack.length) return;
+      redoStack.push(currentPlanSnapshot);
+      applyHistorySnapshot(undoStack.pop());
+      showToast('Edição desfeita. Plano salvo automaticamente.');
+    }
+
+    function redoEdit() {
+      if (!redoStack.length) return;
+      undoStack.push(currentPlanSnapshot);
+      applyHistorySnapshot(redoStack.pop());
+      showToast('Edição refeita. Plano salvo automaticamente.');
+    }
+
+    document.addEventListener('keydown', event => {
+      const target = event.target;
+      if (event.defaultPrevented || event.isComposing || event.altKey || !(event.ctrlKey || event.metaKey) ||
+          target?.isContentEditable || target?.closest?.('input, textarea, select') ||
+          document.getElementById('loginGate').style.display !== 'none') return;
+      const key = event.key.toLowerCase();
+      const isUndo = key === 'z' && !event.shiftKey;
+      const isRedo = (key === 'z' && event.shiftKey) || (key === 'y' && event.ctrlKey && !event.metaKey && !event.shiftKey);
+      if (!isUndo && !isRedo) return;
+      event.preventDefault();
+      if (event.repeat) return;
+      if (isUndo) undoEdit();
+      else redoEdit();
+    });
+
+    // Load from localStorage or Initial
+    function loadCatalogPreset(type) {
+      if (!confirm('Carregar este plano substituirá os ajustes atuais. Salve um JSON antes de continuar. Deseja substituir?')) return;
+      if (type === 'refinado') {
+        pages = JSON.parse(JSON.stringify(PLANO_79_PAGINAS_REFINADO));
+        const b1 = document.getElementById('btnPresetRefinado');
+        const b2 = document.getElementById('btnPresetExpandido');
+        if (b1) b1.classList.add('active');
+        if (b2) b2.classList.remove('active');
+        saveState();
+        renderAllPages();
+        showToast('✨ Catálogo Refinado Ativado: 79 páginas com 0 costas sozinhas!');
+      } else {
+        pages = JSON.parse(JSON.stringify(PLANO_107_PAGINAS_EXPANDIDO));
+        const b1 = document.getElementById('btnPresetRefinado');
+        const b2 = document.getElementById('btnPresetExpandido');
+        if (b1) b1.classList.remove('active');
+        if (b2) b2.classList.add('active');
+        saveState();
+        renderAllPages();
+        showToast('📦 Catálogo Expandido Ativado: 107 páginas');
+      }
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem(NEON_PAGE_KEY);
+      if (saved) {
+        try {
+          pages = validatePlan(JSON.parse(saved));
+        } catch(e) {
+          pages = JSON.parse(JSON.stringify(INITIAL_PAGES));
+        }
+      } else {
+        pages = JSON.parse(JSON.stringify(INITIAL_PAGES));
+      }
+      KallineReview.normalize(pages);
+      undoStack = [];
+      redoStack = [];
+      currentPlanSnapshot = JSON.stringify(pages);
+      updateHistoryControls();
+    }
+
+    function saveState(recordHistory = true) {
+      KallineReview.normalize(pages);
+      const snapshot = JSON.stringify(pages);
+      const changed = currentPlanSnapshot !== null && snapshot !== currentPlanSnapshot &&
+        planFingerprint(pages) !== planFingerprint(JSON.parse(currentPlanSnapshot));
+      if (recordHistory && changed) {
+        undoStack.push(currentPlanSnapshot);
+        if (undoStack.length > HISTORY_LIMIT) undoStack.shift();
+        redoStack = [];
+      }
+      currentPlanSnapshot = snapshot;
+      localStorage.setItem(NEON_PAGE_KEY, snapshot);
+      updateHistoryControls();
+      const b1 = document.getElementById('btnPresetRefinado');
+      const b2 = document.getElementById('btnPresetExpandido');
+      if (b1 && b2) {
+        b1.classList.toggle('active', pages.length === 79);
+        b2.classList.toggle('active', pages.length === 107);
+      }
+    }
+
+    function resetToPilot() {
+      if (confirm('Deseja restaurar a base original refinada pelo Markus? Salve um JSON para preservar seus ajustes atuais.')) {
+        pages = JSON.parse(JSON.stringify(INITIAL_PAGES));
+        saveState();
+        renderAllPages();
+        showToast('Base original refinada pelo Markus restaurada!');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => { toast.style.display = 'none'; }, 3200);
+    }
+
+    // Zoom Management
+    function setZoom(val) {
+      currentScale = Math.max(0.4, Math.min(1.2, val));
+      document.documentElement.style.setProperty('--page-scale', currentScale);
+      document.getElementById('zoomLabel').innerText = Math.round(currentScale * 100) + '%';
+    }
+
+    function adjustZoom(delta) {
+      setZoom(currentScale + delta);
+    }
+
+    function setViewMode(mode) {
+      viewMode = mode;
+      document.getElementById('btnViewSpread').classList.toggle('active', mode === 'spread');
+      document.getElementById('btnViewSingle').classList.toggle('active', mode === 'single');
+      renderAllPages();
+    }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('collapsed');
+    }
+
+    function toggleCleanMode() {
+      const canvas = document.getElementById('pagesCanvas');
+      const isClean = canvas.classList.toggle('canvas-clean-mode');
+      const btn = document.getElementById('btnToggleCleanMode');
+      if (btn) {
+        btn.innerHTML = isClean ? '<i data-lucide="sliders"></i> Modo Edição' : '<i data-lucide="eye"></i> Modo Impresso';
+        btn.classList.toggle('active', isClean);
+        if (window.lucide) lucide.createIcons();
+      }
+      showToast(isClean ? 'Modo Impresso Ativado (Etiquetas Ocultas)' : 'Modo Edição Ativado');
+    }
+
+    // Find Look by Number
+    function getLookBySeq(seq) {
+      return LOOKS_DATA.find(l => l.seq === seq) || LOOKS_DATA[0];
+    }
+
+    // PAGE CREATION & MODIFICATION
+        // MODAL INSERIR PÁGINA ENTRE PÁGINAS
+    let currentInsertAfterIndex = null;
+    let selectedInsertGrid = 'look3';
+
+    function openInsertModal(afterIndex) {
+      currentInsertAfterIndex = afterIndex;
+      const targetPageNum = afterIndex + 1;
+      document.getElementById('insertModalPageLabel').innerText = `Página ${targetPageNum}`;
+
+      const curPage = pages[afterIndex];
+      const curLookNum = curPage ? curPage.lookNum : 1;
+
+      const select = document.getElementById('insertModalLookSelect');
+      select.innerHTML = LOOKS_DATA.map(l => `
+        <option value="${l.seq}" ${l.seq === curLookNum ? 'selected' : ''}>
+          #${l.seq.toString().padStart(2, '0')} • ${l.name1} ${l.name2 ? ' + ' + l.name2 : ''}
+        </option>
+      `).join('');
+
+      selectedInsertGrid = (curPage && curPage.type === 'look3') ? '2col' : 'look3';
+      selectInsertGrid(selectedInsertGrid);
+
+      document.getElementById('insertPageModal').classList.add('open');
+      document.getElementById('insertPageModal').style.display = 'flex';
+    }
+
+    function closeInsertModal() {
+      const modal = document.getElementById('insertPageModal');
+      modal.classList.remove('open');
+      modal.style.display = 'none';
+      currentInsertAfterIndex = null;
+    }
+
+    function selectInsertGrid(gridType, el) {
+      selectedInsertGrid = gridType;
+      document.querySelectorAll('#insertPageModal .grid-choice-card').forEach(c => {
+        c.classList.toggle('active', c.getAttribute('data-grid') === gridType);
+      });
+    }
+
+    function confirmInsertPage() {
+      if (currentInsertAfterIndex === null) return;
+
+      const lookNum = parseInt(document.getElementById('insertModalLookSelect').value, 10);
+      const autoFill = document.getElementById('insertModalAutoFill').checked;
+      const look = getLookBySeq(lookNum);
+
+      const newId = 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+
+      let pieces = [{ name: look.name1, code: look.ref1, size: look.tam.split('/')[0].trim() }];
+      if (look.name2 && look.ref2) {
+        const size2 = look.tam.includes('/') ? look.tam.split('/')[1].trim() : '36 ao 46';
+        pieces.push({ name: look.name2, code: look.ref2, size: size2 });
+      }
+
+      if (selectedInsertGrid === '2col' && look.name2 && look.ref2) {
+        const size2 = look.tam.includes('/') ? look.tam.split('/')[1].trim() : '36 ao 46';
+        pieces = [{ name: look.name2, code: look.ref2, size: size2 }];
+      }
+
+      const slots = {};
+      if (autoFill) {
+        const entered = look.entered || [];
+        const unusedTratadas = look.unused_tratadas || [];
+
+        if (selectedInsertGrid === 'look3') {
+          if (entered[0]) slots.front = { file: entered[0].filename, pos: 'center' };
+          if (entered[1]) slots.topRight = { file: entered[1].filename, pos: 'center' };
+          if (entered[2]) slots.bottomRight = { file: entered[2].filename, pos: 'center' };
+        } else if (selectedInsertGrid === 'look3_right') {
+          if (entered[0]) slots.heroRight = { file: entered[0].filename, pos: 'center' };
+          if (entered[1]) slots.topLeft = { file: entered[1].filename, pos: 'center' };
+          if (entered[2]) slots.bottomLeft = { file: entered[2].filename, pos: 'center' };
+        } else if (selectedInsertGrid === '2col') {
+          if (unusedTratadas.length >= 2) {
+            slots.col1 = { file: unusedTratadas[0], pos: 'center' };
+            slots.col2 = { file: unusedTratadas[1], pos: 'center' };
+          } else if (entered.length >= 2) {
+            slots.col1 = { file: entered[0].filename, pos: 'center' };
+            slots.col2 = { file: entered[1].filename, pos: 'center' };
+          }
+        } else if (selectedInsertGrid === 'estourada') {
+          if (entered[3]) {
+            slots.hero = { file: entered[3].filename, pos: 'center' };
+          } else if (entered[0]) {
+            slots.hero = { file: entered[0].filename, pos: 'center' };
+          }
+        } else if (selectedInsertGrid === 'quad4') {
+          if (entered[0]) slots.slot1 = { file: entered[0].filename, pos: 'center' };
+          if (entered[1]) slots.slot2 = { file: entered[1].filename, pos: 'center' };
+          if (entered[2]) slots.slot3 = { file: entered[2].filename, pos: 'center' };
+          if (entered[3]) slots.slot4 = { file: entered[3].filename, pos: 'center' };
+        }
+      }
+
+      const newPage = {
+        id: newId,
+        type: selectedInsertGrid,
+        lookNum: lookNum,
+        pieces: pieces,
+        slots: slots
+      };
+
+      pages.splice(currentInsertAfterIndex + 1, 0, newPage);
+
+      const insertedPageNum = currentInsertAfterIndex + 2;
+      closeInsertModal();
+      saveState();
+      renderAllPages();
+      showToast(`Página inserida na posição ${insertedPageNum} com sucesso!`);
+
+      setTimeout(() => {
+        const el = document.getElementById(newId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+
+    function addNewPage(afterIndex = null, template = null) {
+      const newId = 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+      let newPage;
+
+      if (template) {
+        newPage = JSON.parse(JSON.stringify(template));
+        newPage.id = newId;
+      } else {
+        const nextLookNum = (pages.length % LOOKS_DATA.length) + 1;
+        const look = getLookBySeq(nextLookNum);
+        newPage = createDefaultPageForLook(look, newId);
+      }
+
+      if (afterIndex === null || afterIndex === undefined) {
+        pages.push(newPage);
+      } else {
+        pages.splice(afterIndex + 1, 0, newPage);
+      }
+
+      saveState();
+      renderAllPages();
+      showToast(`Página adicionada com sucesso! (Total: ${pages.length})`);
+
+      setTimeout(() => {
+        const el = document.getElementById(newId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+
+    function createDefaultPageForLook(look, id) {
+      const pieces = [{ name: look.name1, code: look.ref1, size: look.tam }];
+      if (look.name2 && look.ref2) {
+        pieces.push({ name: look.name2, code: look.ref2, size: look.tam.includes('/') ? look.tam.split('/')[1].trim() : '36 ao 46' });
+      }
+
+      const slots = {};
+      const entered = look.entered || [];
+      if (entered[0]) slots.front = { file: entered[0].filename, pos: 'center' };
+      if (entered[1]) slots.topRight = { file: entered[1].filename, pos: 'center' };
+      if (entered[2]) slots.bottomRight = { file: entered[2].filename, pos: 'center' };
+
+      return {
+        id: id || 'p_' + Date.now(),
+        type: 'look3',
+        lookNum: look.seq,
+        pieces: pieces,
+        slots: slots
+      };
+    }
+
+    function deletePage(idx) {
+      if (pages.length <= 1) {
+        alert('O catálogo precisa ter pelo menos 1 página!');
+        return;
+      }
+      const pNum = (idx + 1).toString().padStart(2, '0');
+      const page = pages[idx];
+      const look = page ? getLookBySeq(page.lookNum) : null;
+      const lookTitle = look ? `#${look.seq} - ${look.name1}` : '';
+      if (confirm(`Deseja realmente excluir a Página ${pNum} (${lookTitle})?`)) {
+        pages.splice(idx, 1);
+        saveState();
+        renderAllPages(true);
+        showToast(`Página ${pNum} excluída.`);
+      }
+    }
+
+    function duplicatePage(idx) {
+      const target = pages[idx];
+      const clone = JSON.parse(JSON.stringify(target));
+      clone.id = 'p_' + crypto.randomUUID().replaceAll('-', '');
+      clone.pieces.forEach(p => { p.id = reviewUid('piece'); });
+      (clone.comments || []).forEach(c => { c.id = reviewUid('comment'); c.pageId = clone.id; });
+      pages.splice(idx + 1, 0, clone);
+      saveState();
+      renderAllPages(true);
+      showToast(`Página ${idx + 1} duplicada!`);
+    }
+
+    function movePage(idx, direction) {
+      const newIdx = idx + direction;
+      if (newIdx < 0 || newIdx >= pages.length) return;
+      const item = pages.splice(idx, 1)[0];
+      pages.splice(newIdx, 0, item);
+      saveState();
+      renderAllPages(true);
+      setTimeout(() => {
+        const el = document.getElementById(item.id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
+    }
+
+    // Selection order is primary/hero first, then supporting photos. Mirroring
+    // a hero layout changes placement, not which image is primary.
+    const GRID_SLOT_KEYS = {
+      look3: ['front', 'topRight', 'bottomRight'],
+      look3_right: ['heroRight', 'topLeft', 'bottomLeft'],
+      '2col': ['col1', 'col2'],
+      '3col': ['col1', 'col2', 'col3'],
+      quad4: ['slot1', 'slot2', 'slot3', 'slot4'],
+      estourada: ['hero']
+    };
+
+    function changePageGrid(pageId, newGridType) {
+      const page = pages.find(p => p.id === pageId);
+      if (!page || page.type === newGridType || !GRID_SLOT_KEYS[newGridType]) return;
+      const oldKeys = GRID_SLOT_KEYS[page.type];
+      const newKeys = GRID_SLOT_KEYS[newGridType];
+      const cloneSlot = slot => slot ? { ...slot } : { file: '', pos: 'center' };
+      const selection = oldKeys.map(key => cloneSlot(page.slots[key]))
+        .concat((page.gridOverflow || []).map(cloneSlot));
+
+      // Older saves may contain stale keys from several layouts. Preserve them
+      // separately for compatibility, but never select or export them implicitly.
+      const legacy = Object.fromEntries(Object.entries(page.slots).filter(([key]) => !oldKeys.includes(key)));
+      if (Object.keys(legacy).length) page.legacyGridSlots = { ...page.legacyGridSlots, ...legacy };
+      page.type = newGridType;
+      page.slots = Object.fromEntries(newKeys.map((key, index) => [key, cloneSlot(selection[index])]));
+      const overflow = selection.slice(newKeys.length);
+      if (overflow.length) page.gridOverflow = overflow;
+      else delete page.gridOverflow;
+
+      saveState();
+      renderAllPages(true);
+      showToast(`Grid alterado para ${newGridType.toUpperCase()}. Seleção preservada.`);
+    }
+
+    function changePageLook(pageId, newLookNum) {
+      const page = pages.find(p => p.id === pageId);
+      if (!page || page.lookNum === Number(newLookNum)) return;
+      const look = getLookBySeq(parseInt(newLookNum));
+      page.lookNum = look.seq;
+      delete page.gridOverflow;
+      delete page.legacyGridSlots;
+
+      page.pieces = [{ name: look.name1, code: look.ref1, size: look.tam }];
+      if (look.name2 && look.ref2) {
+        page.pieces.push({ name: look.name2, code: look.ref2, size: look.tam.includes('/') ? look.tam.split('/')[1].trim() : '36 ao 46' });
+      }
+
+      const entered = look.entered || [];
+      page.slots = {};
+      if (page.type === 'look3') {
+        if (entered[0]) page.slots.front = { file: entered[0].filename, pos: 'center' };
+        if (entered[1]) page.slots.topRight = { file: entered[1].filename, pos: 'center' };
+        if (entered[2]) page.slots.bottomRight = { file: entered[2].filename, pos: 'center' };
+      } else if (page.type === 'look3_right') {
+        if (entered[0]) page.slots.heroRight = { file: entered[0].filename, pos: 'center' };
+        if (entered[1]) page.slots.topLeft = { file: entered[1].filename, pos: 'center' };
+        if (entered[2]) page.slots.bottomLeft = { file: entered[2].filename, pos: 'center' };
+      } else if (page.type === '2col') {
+        if (entered[0]) page.slots.col1 = { file: entered[0].filename, pos: 'center' };
+        if (entered[1]) page.slots.col2 = { file: entered[1].filename, pos: 'center' };
+      } else if (page.type === '3col') {
+        if (entered[0]) page.slots.col1 = { file: entered[0].filename, pos: 'center' };
+        if (entered[1]) page.slots.col2 = { file: entered[1].filename, pos: 'center' };
+        if (entered[2]) page.slots.col3 = { file: entered[2].filename, pos: 'center' };
+      } else if (page.type === 'estourada') {
+        const heroFile = (entered[3] ? entered[3].filename : (entered[0] ? entered[0].filename : ''));
+        page.slots.hero = { file: heroFile, pos: 'center' };
+      } else if (page.type === 'quad4') {
+        if (entered[0]) page.slots.slot1 = { file: entered[0].filename, pos: 'center' };
+        if (entered[1]) page.slots.slot2 = { file: entered[1].filename, pos: 'center' };
+        if (entered[2]) page.slots.slot3 = { file: entered[2].filename, pos: 'center' };
+        if (entered[3]) page.slots.slot4 = { file: entered[3].filename, pos: 'center' };
+      }
+
+      saveState();
+      renderAllPages(true);
+      showToast(`Look #${look.seq} (${look.name1}) aplicado à página!`);
+    }
+
+    // SMART DESDOBRAR LOOK
+    function openDesdobrarModal(pageIdx) {
+      const page = pages[pageIdx];
+      const look = getLookBySeq(page.lookNum);
+      const modal = document.getElementById('desdobrarModal');
+      const body = document.getElementById('desdobrarModalBody');
+
+      let optionsHtml = '';
+
+      if (look.name2 && look.ref2) {
+        const unused = look.unused_tratadas || [];
+        const f1 = unused[0] || (look.entered[0] ? look.entered[0].filename : '');
+        const f2 = unused[1] || (look.entered[1] ? look.entered[1].filename : '');
+
+        optionsHtml += `
+          <div class="look-side-card" style="border-color:var(--accent-blue);" onclick="executeDesdobrar(${pageIdx}, 'baixo_2col')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:700; color:var(--accent-blue);">👖 Opção 1: Peça de Baixo (${look.name2})</span>
+              <span class="look-seq-pill">GRID 2 COLUNAS</span>
+            </div>
+            <div style="font-size:0.75rem; color:var(--text-muted);">
+              Cria página dedicada para a peça de baixo com 2 fotos verticais e legenda exclusiva da peça.
+            </div>
+          </div>
+        `;
+      }
+
+      const extraPhoto = (look.entered && look.entered[3]) ? look.entered[3].filename : '';
+      optionsHtml += `
+        <div class="look-side-card" style="border-color:var(--accent-purple);" onclick="executeDesdobrar(${pageIdx}, 'estourada')">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:700; color:var(--accent-purple);">💥 Opção 2: Detalhe Estourado (Página Inteira)</span>
+            <span class="look-seq-pill">1 FOTO FULL</span>
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted);">
+            Cria página de respiro e impacto com foto de detalhe estourado (${extraPhoto || 'selecionar foto'}).
+          </div>
+        </div>
+      `;
+
+      optionsHtml += `
+        <div class="look-side-card" onclick="executeDesdobrar(${pageIdx}, 'look3_duplicado')">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:700; color:var(--accent-gold);">🔲 Opção 3: Grid 3 Fotos Alternativas</span>
+            <span class="look-seq-pill">GRID 3 FOTOS</span>
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted);">
+            Cria uma segunda página com o mesmo look para explorar outros ângulos do ensaio.
+          </div>
+        </div>
+      `;
+
+      body.innerHTML = `
+        <div style="margin-bottom:12px; font-size:0.85rem; color:#cbd5e1;">
+          Look atual: <strong>#${look.seq.toString().padStart(2, '0')} • ${look.name1}</strong>
+          ${look.name2 ? ' + <strong>' + look.name2 + '</strong>' : ''}
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          ${optionsHtml}
+        </div>
+      `;
+
+      modal.classList.add('open');
+    }
+
+    function closeDesdobrarModal() {
+      document.getElementById('desdobrarModal').classList.remove('open');
+    }
+
+    function executeDesdobrar(pageIdx, type) {
+      closeDesdobrarModal();
+      const currentPage = pages[pageIdx];
+      const look = getLookBySeq(currentPage.lookNum);
+      const newId = 'p_' + Date.now();
+
+      let newPage;
+      if (type === 'baixo_2col') {
+        const unused = look.unused_tratadas || [];
+        const f1 = unused[0] || (look.entered[0] ? look.entered[0].filename : '');
+        const f2 = unused[1] || (look.entered[1] ? look.entered[1].filename : '');
+        newPage = {
+          id: newId,
+          type: '2col',
+          lookNum: look.seq,
+          pieces: [{ name: look.name2, code: look.ref2, size: '36 ao 46' }],
+          slots: {
+            col1: { file: f1, pos: 'center' },
+            col2: { file: f2, pos: 'center' }
+          }
+        };
+      } else if (type === 'estourada') {
+        const heroPhoto = (look.entered && look.entered[3]) ? look.entered[3].filename : (look.entered[0] ? look.entered[0].filename : '');
+        newPage = {
+          id: newId,
+          type: 'estourada',
+          lookNum: look.seq,
+          pieces: [{ name: look.name1, code: look.ref1, size: 'DETALHE' }],
+          slots: {
+            hero: { file: heroPhoto, pos: 'center' }
+          }
+        };
+      } else {
+        newPage = createDefaultPageForLook(look, newId);
+      }
+
+      pages.splice(pageIdx + 1, 0, newPage);
+      saveState();
+      renderAllPages();
+      showToast(`Look #${look.seq} desdobrado com sucesso na Página ${pageIdx + 2}!`);
+
+      setTimeout(() => {
+        const el = document.getElementById(newId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+
+    // PHOTO PICKER LOGIC
+    function openPhotoPicker(pageId, slotKey, slotLabel) {
+      const page = pages.find(p => p.id === pageId);
+      if (!page) return;
+      activeEditingSlot = { pageId, slotKey, lookNum: page.lookNum };
+
+      const look = getLookBySeq(page.lookNum);
+      document.getElementById('pickerSlotTargetName').innerText = `${slotLabel} (Look #${look.seq} • ${look.name1})`;
+
+      const tratadasGrid = document.getElementById('pickerTratadasGrid');
+      const todasGrid = document.getElementById('pickerTodasGrid');
+      document.getElementById('manualFilenameInput').value = (page.slots[slotKey] ? page.slots[slotKey].file : '');
+
+      const tratadasList = [];
+      if (look.entered) {
+        look.entered.forEach(e => tratadasList.push({ filename: e.filename, label: e.slot || 'Tratada', isTratada: true }));
+      }
+      if (look.unused_tratadas) {
+        look.unused_tratadas.forEach(fn => tratadasList.push({ filename: fn, label: 'Tratada Extra', isTratada: true }));
+      }
+
+      tratadasGrid.innerHTML = tratadasList.map(item => `
+        <div class="picker-photo-card ${page.slots[slotKey] && page.slots[slotKey].file === item.filename && !isRawPhotoSlot(page.slots[slotKey]) ? 'selected' : ''}" onclick="selectPhotoForSlot('${item.filename}', 'treated')">
+          <div class="picker-thumb-wrap">
+            <span class="picker-slot-tag">${item.label}</span>
+            <img src="${getPhotoUrl(item.filename, true)}" loading="lazy" alt="${item.filename}" onerror="handlePhotoLoadError(this, '${getAbsoluteFallbackUrl(item.filename, true)}')">
+          </div>
+          <div class="picker-file-name" title="${item.filename}">${item.filename}</div>
+        </div>
+      `).join('');
+
+      const availableRaw = window.KALLINE_RAW_PHOTOS?.byLook?.[String(look.seq)] || [];
+      const todasList = [...new Set(availableRaw.concat(look.unused_todas || []))]
+        .map(fn => ({ filename: fn, label: availableRaw.includes(fn) ? 'Bruta • prévia leve' : 'Bruta • prévia pendente' }));
+      todasGrid.innerHTML = todasList.map(item => `
+        <div class="picker-photo-card ${page.slots[slotKey] && page.slots[slotKey].file === item.filename && isRawPhotoSlot(page.slots[slotKey]) ? 'selected' : ''}" onclick="selectPhotoForSlot('${item.filename}', 'raw')">
+          <div class="picker-thumb-wrap">
+            <span class="picker-slot-tag">${item.label}</span>
+            <img src="${getPhotoUrl(item.filename, false)}" loading="lazy" alt="${item.filename}" onerror="handlePhotoLoadError(this, '${getAbsoluteFallbackUrl(item.filename, false)}')">
+          </div>
+          <div class="picker-file-name" title="${item.filename}">${item.filename}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('photoPickerModal').classList.add('open');
+    }
+
+    function closePhotoPickerModal() {
+      document.getElementById('photoPickerModal').classList.remove('open');
+      activeEditingSlot = null;
+    }
+
+    function selectPhotoForSlot(filename, source) {
+      if (!activeEditingSlot) return;
+      const { pageId, slotKey } = activeEditingSlot;
+      const page = pages.find(p => p.id === pageId);
+      if (page) {
+        if (!page.slots[slotKey]) page.slots[slotKey] = { pos: 'center' };
+        const previous = page.slots[slotKey];
+        const resolvedSource = source || (previous.file === filename && previous.source) ||
+          (KNOWN_RAW_PHOTO_FILES.has(filename) && !TREATED_PHOTO_FILES.has(filename) ? 'raw' : 'treated');
+        if (previous.file === filename && resolvedSource === (isRawPhotoSlot(previous) ? 'raw' : 'treated')) {
+          closePhotoPickerModal();
+          return;
+        }
+        page.slots[slotKey].source = resolvedSource;
+        page.slots[slotKey].file = filename;
+        saveState();
+        renderAllPages();
+        showToast(`Foto aplicada ao box ${slotKey}!`);
+      }
+      closePhotoPickerModal();
+    }
+
+    function applyManualFilename() {
+      const val = document.getElementById('manualFilenameInput').value.trim();
+      if (!val) return;
+      selectPhotoForSlot(val);
+    }
+
+    function cycleSlotPosition(pageId, slotKey, event) {
+      event.stopPropagation();
+      const page = pages.find(p => p.id === pageId);
+      if (!page || !page.slots[slotKey]) return;
+      const cur = page.slots[slotKey].pos || 'center';
+      const map = { 'top': 'center', 'center': 'bottom', 'bottom': 'top' };
+      page.slots[slotKey].pos = map[cur] || 'center';
+      saveState();
+      renderAllPages();
+      showToast(`Enquadramento: ${page.slots[slotKey].pos.toUpperCase()}`);
+    }
+
+    function clearSlotPhoto(pageId, slotKey, event) {
+      event.stopPropagation();
+      const page = pages.find(p => p.id === pageId);
+      if (!page || !page.slots[slotKey]) return;
+      page.slots[slotKey].file = '';
+      saveState();
+      renderAllPages();
+      showToast('Foto removida do box.');
+    }
+
+    function getAllPhotosForLook(look) {
+      const list = [];
+      if (look.entered) look.entered.forEach(e => list.push({ filename: e.filename, isTratada: true }));
+      if (look.unused_tratadas) look.unused_tratadas.forEach(fn => list.push({ filename: fn, isTratada: true }));
+      if (look.unused_todas) look.unused_todas.forEach(fn => list.push({ filename: fn, isTratada: false }));
+      return list;
+    }
+
+    // DRAG AND DROP SWAP BETWEEN BOXES
+    let draggedSlotData = null;
+
+    function handleSlotDragStart(e, pageId, slotKey) {
+      draggedSlotData = { pageId, slotKey };
+      e.dataTransfer.setData('text/plain', JSON.stringify(draggedSlotData));
+    }
+
+    function handleSlotDragOver(e) {
+      e.preventDefault();
+    }
+
+    function handleSlotDrop(e, targetPageId, targetSlotKey) {
+      e.preventDefault();
+      if (!draggedSlotData) return;
+      const { pageId: srcPageId, slotKey: srcSlotKey } = draggedSlotData;
+
+      const srcPage = pages.find(p => p.id === srcPageId);
+      const tgtPage = pages.find(p => p.id === targetPageId);
+
+      if (srcPage && tgtPage) {
+        const temp = srcPage.slots[srcSlotKey];
+        srcPage.slots[srcSlotKey] = tgtPage.slots[targetSlotKey] || { file: '', pos: 'center' };
+        tgtPage.slots[targetSlotKey] = temp || { file: '', pos: 'center' };
+        saveState();
+        renderAllPages();
+        showToast('Fotos trocadas entre os boxes!');
+      }
+      draggedSlotData = null;
+    }
+
+    // RENDER A SINGLE PHOTO SLOT BOX
+    function renderPhotoSlotBox(page, slotKey, slotLabel, customClass = '') {
+      const slotData = page.slots[slotKey] || { file: '', pos: 'center' };
+      const filename = slotData.file || '';
+      const pos = slotData.pos || 'center';
+
+      if (!filename) {
+        return `
+          <div class="photo-slot ${customClass}" onclick="openPhotoPicker('${page.id}', '${slotKey}', '${slotLabel}')" ondragover="handleSlotDragOver(event)" ondrop="handleSlotDrop(event, '${page.id}', '${slotKey}')">
+            <span class="slot-badge">${slotLabel}</span>
+            <div class="slot-empty-content">
+              <span class="slot-empty-icon">➕</span>
+              <span>Escolher Foto</span>
+            </div>
+          </div>
+        `;
+      }
+
+      const isTratada = !isRawPhotoSlot(slotData);
+      const src = getPhotoUrl(filename, isTratada);
+      const fallback = getAbsoluteFallbackUrl(filename, isTratada);
+
+      return `
+        <div class="photo-slot ${customClass}" onclick="openPhotoPicker('${page.id}', '${slotKey}', '${slotLabel}')" draggable="true" ondragstart="handleSlotDragStart(event, '${page.id}', '${slotKey}')" ondragover="handleSlotDragOver(event)" ondrop="handleSlotDrop(event, '${page.id}', '${slotKey}')">
+          <span class="slot-badge">${slotLabel}</span>
+          <img src="${src}" style="object-position: ${pos};" loading="lazy" alt="${filename}" onerror="handlePhotoLoadError(this, '${fallback}')">
+          <div class="slot-actions-overlay">
+            <span class="slot-file-label">${filename}</span>
+            <div style="display:flex; gap:6px;">
+              <button class="slot-action-btn" onclick="event.stopPropagation(); openPhotoPicker('${page.id}', '${slotKey}', '${slotLabel}')">
+                🔄 Trocar
+              </button>
+              <button class="slot-action-btn" onclick="cycleSlotPosition('${page.id}', '${slotKey}', event)" title="Ajustar Enquadramento (Topo/Centro/Baixo)">
+                ↕️ ${pos.toUpperCase()}
+              </button>
+              <button class="slot-action-btn" onclick="clearSlotPhoto('${page.id}', '${slotKey}', event)" title="Remover Foto">
+                ✕
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // REAL OFFICIAL BRASAO KALLINE (EMBEDDED PNG)
+    let KALLINE_BRASAO_DATA = '';
+    let KALLINE_BRASAO_HTML = '';
+
+    // RENDER EDITORIAL PAGE FOOTER (PADRÃO INDESIGN KALLINE)
+    function renderPageFooter(page) {
+      const list = KallineReview.printed(page), esc = KallineReview.escape;
+      return `<footer class="page-editorial-footer ${list.length >= 3 ? 'footer-compact' : ''}">${list.map((p,i) => `
+        <div class="footer-row-item" ${list.length === 2 && i === 1 ? 'style="margin-top: calc(4px * var(--page-scale) / 0.75);"' : ''}>
+          <div class="footer-left-group">
+            ${i === 0 ? `<div class="kalline-brasao-wrap">${KALLINE_BRASAO_HTML}</div>` : '<div class="kalline-brasao-spacer"></div>'}
+            <div class="footer-piece-line"><span class="footer-piece-name">${esc(p.name.trim().toUpperCase())}</span><span class="footer-piece-code">${esc((p.name.trim() && p.code.trim() ? ' - ' : '') + p.code.trim())}</span></div>
+          </div>
+          ${p.size.trim() ? `<div class="footer-right-group"><div class="footer-size-line"><span class="footer-hairline"></span><span>${esc(p.size.trim().toUpperCase())}</span></div></div>` : ''}
+        </div>`).join('')}</footer>`;
+    }
+
+    // RENDER A FULL LOOKBOOK PAGE CARD
+    function renderPageCard(page, idx, isSpreadLeft = false, isSpreadRight = false) {
+      const pageNum = idx + 1;
+      const look = getLookBySeq(page.lookNum);
+      const overflowCount = (page.gridOverflow || []).filter(slot => slot?.file).length;
+
+      // Render Grid Content based on type
+      let gridHtml = '';
+      if (page.type === 'look3') {
+        gridHtml = `
+          <div class="grid-look3">
+            <div class="col-left">
+              ${renderPhotoSlotBox(page, 'front', 'Frente / Look Todo')}
+            </div>
+            <div class="col-right">
+              ${renderPhotoSlotBox(page, 'topRight', 'Detalhe (Sup. Dir)', 'slot-top-right')}
+              ${renderPhotoSlotBox(page, 'bottomRight', 'Costas (Inf. Dir)', 'slot-bottom-right')}
+            </div>
+          </div>
+        `;
+      } else if (page.type === 'look3_right') {
+        gridHtml = `
+          <div class="grid-look3-right">
+            <div class="col-left">
+              ${renderPhotoSlotBox(page, 'topLeft', 'Detalhe (Sup. Esq)', 'slot-top-left')}
+              ${renderPhotoSlotBox(page, 'bottomLeft', 'Costas (Inf. Esq)', 'slot-bottom-left')}
+            </div>
+            <div class="col-right">
+              ${renderPhotoSlotBox(page, 'heroRight', 'Frente / Look Todo (Dir)')}
+            </div>
+          </div>
+        `;
+      } else if (page.type === '2col') {
+        gridHtml = `
+          <div class="grid-2col">
+            ${renderPhotoSlotBox(page, 'col1', 'Coluna 1 (Frente)')}
+            ${renderPhotoSlotBox(page, 'col2', 'Coluna 2 (Costas/Detalhe)')}
+          </div>
+        `;
+      } else if (page.type === '3col') {
+        gridHtml = `
+          <div class="grid-3col">
+            ${renderPhotoSlotBox(page, 'col1', 'Coluna 1 (Frente)')}
+            ${renderPhotoSlotBox(page, 'col2', 'Coluna 2 (Costas)')}
+            ${renderPhotoSlotBox(page, 'col3', 'Coluna 3 (Detalhe/Pose)')}
+          </div>
+        `;
+      } else if (page.type === 'estourada') {
+        gridHtml = `
+          <div class="grid-estourada">
+            ${renderPhotoSlotBox(page, 'hero', 'Detalhe Estourado (Página Inteira)')}
+          </div>
+        `;
+      } else if (page.type === 'quad4') {
+        gridHtml = `
+          <div class="grid-quad4">
+            ${renderPhotoSlotBox(page, 'slot1', 'Foto 1')}
+            ${renderPhotoSlotBox(page, 'slot2', 'Foto 2')}
+            ${renderPhotoSlotBox(page, 'slot3', 'Foto 3')}
+            ${renderPhotoSlotBox(page, 'slot4', 'Foto 4')}
+          </div>
+        `;
+      }
+
+      // Look Select Options
+      const lookOptions = LOOKS_DATA.map(l => `
+        <option value="${l.seq}" ${l.seq === page.lookNum ? 'selected' : ''}>
+          #${l.seq.toString().padStart(2, '0')} • ${l.name1}
+        </option>
+      `).join('');
+
+      return `
+        <div class="page-wrapper" id="${page.id}">
+          <!-- Page Toolbar (2 Linhas Organizadas - Sem Overflow) -->
+          <div class="page-toolbar">
+            <!-- Linha 1: Identificação, Seleção de Look e Ferramentas da Página -->
+            <div class="toolbar-row">
+              <div class="toolbar-row-left">
+                <span class="page-num-pill">
+                  PÁG ${pageNum.toString().padStart(2, '0')} ${viewMode === 'spread' ? (isSpreadLeft ? '[ESQ]' : (isSpreadRight ? '[DIR]' : '')) : ''}
+                </span>
+                <select class="page-look-select" onchange="changePageLook('${page.id}', this.value)" title="Selecionar Look">
+                  ${lookOptions}
+                </select>
+              </div>
+              <div class="toolbar-row-right">
+                <div class="page-tools">
+                  <button class="btn-tool-icon" onclick="movePage(${idx}, -1)" title="Subir na sequência (Mover antes)"><i data-lucide="chevron-up"></i></button>
+                  <button class="btn-tool-icon" onclick="movePage(${idx}, 1)" title="Descer na sequência (Mover depois)"><i data-lucide="chevron-down"></i></button>
+                  <button class="btn-tool-icon" onclick="duplicatePage(${idx})" title="Duplicar Página"><i data-lucide="copy"></i></button>
+                  <button class="btn-tool-icon btn-tool-delete" onclick="deletePage(${idx})" title="Excluir esta Página (${pageNum.toString().padStart(2, '0')})"><i data-lucide="trash-2"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Linha 2: Troca de Grade e Desdobro / Inserção -->
+            <div class="toolbar-row">
+              <div class="toolbar-row-left">
+                <div class="grid-pills">
+                  <button class="grid-pill-btn ${page.type === 'look3' ? 'active' : ''}" onclick="changePageGrid('${page.id}', 'look3')" title="3 Fotos: Hero na Esquerda (58%) + 2 Fotos na Direita (40%)">
+                    3 ESQ
+                  </button>
+                  <button class="grid-pill-btn ${page.type === 'look3_right' ? 'active' : ''}" onclick="changePageGrid('${page.id}', 'look3_right')" title="3 Fotos: 2 Fotos na Esquerda (40%) + Hero na Direita (58%)">
+                    3 DIR
+                  </button>
+                  <button class="grid-pill-btn ${page.type === '2col' ? 'active' : ''}" onclick="changePageGrid('${page.id}', '2col')" title="Grid 2 Colunas Verticais">
+                    2 COL
+                  </button>
+                  <button class="grid-pill-btn ${page.type === '3col' ? 'active' : ''}" onclick="changePageGrid('${page.id}', '3col')" title="Grid 3 Colunas Verticais">
+                    3 COL
+                  </button>
+                  <button class="grid-pill-btn ${page.type === 'quad4' ? 'active' : ''}" onclick="changePageGrid('${page.id}', 'quad4')" title="Grid 4 Fotos (Mosaico 2x2)">
+                    4 FOTOS
+                  </button>
+                  <button class="grid-pill-btn ${page.type === 'estourada' ? 'active' : ''}" onclick="changePageGrid('${page.id}', 'estourada')" title="Detalhe Estourado Full Page">
+                    1 FULL
+                  </button>
+                </div>
+              </div>
+              <div class="toolbar-row-right">
+                <button class="btn-tool-insert-small" onclick="openPiecesEditor('${page.id}')">Peças / referências</button>
+                <button class="btn-tool-insert-small" onclick="openCommentsEditor('${page.id}')">Comentários (${(page.comments || []).filter(c => !c.resolved).length})</button>
+                <button class="btn-tool-insert-small" onclick="openInsertModal(${idx})" title="Inserir nova página após esta">
+                  <i data-lucide="plus-circle"></i> Inserir
+                </button>
+                <button class="btn-desdobrar" onclick="openDesdobrarModal(${idx})" title="Desdobrar este look na sequência (Página de Saia/Calça ou Detalhe)">
+                  <i data-lucide="split"></i> Desdobrar
+                </button>
+              </div>
+            </div>
+          ${overflowCount ? `<div class="grid-overflow-note" title="Aumente os espaços da grade para exibir as fotos guardadas. O JSX usa apenas as fotos visíveis.">${overflowCount} ${overflowCount === 1 ? 'foto guardada' : 'fotos guardadas'} ao reduzir a grade</div>` : ''}
+          </div>
+
+          <!-- Printable Lookbook Page -->
+          <div data-review-page="${page.id}" class="lookbook-page ${isSpreadLeft ? 'page-left' : ''} ${isSpreadRight ? 'page-right' : ''}">
+            <div class="page-photo-grid">
+              ${gridHtml}
+            </div>
+            ${renderPageFooter(page)}
+            ${renderReviewOverlay(page)}
+          </div>
+          <div class="review-overflow-warning" data-footer-warning="${page.id}" role="status" hidden></div>
+        </div>
+      `;
+    }
+
+    // RENDER ALL PAGES (SPREAD MODE OR SINGLE MODE)
+    function renderAllPages(preserveScroll = true) {
+      const scrollY = preserveScroll ? window.scrollY : 0;
+      const container = document.getElementById('pagesCanvas');
+      requestAnimationFrame(checkAllFooterOverflow);
+
+      if (viewMode === 'single') {
+        let html = '';
+        pages.forEach((page, idx) => {
+          html += renderPageCard(page, idx);
+          if (idx < pages.length - 1) {
+            html += `
+              <div class="page-insert-strip" onclick="openInsertModal(${idx})" title="Clique para inserir uma nova página aqui entre Pág ${idx + 1} e Pág ${idx + 2}">
+                <div class="insert-divider-line"></div>
+                <div class="insert-pill">➕ Inserir página entre Pág ${idx + 1} e Pág ${idx + 2}</div>
+                <div class="insert-divider-line"></div>
+              </div>
+            `;
+          }
+        });
+        container.innerHTML = html;
+        if (preserveScroll && scrollY > 0) {
+          window.scrollTo({ top: scrollY, behavior: 'instant' });
+        }
+        return;
+      }
+
+      // Spread Mode: Cover as single recto, then pairs (Esq | Dir)
+      let html = '';
+      let i = 0;
+
+      // Pág 1 (Abertura / Capa / Recto)
+      if (pages.length > 0) {
+        html += `
+          <div class="spread-row single-cover">
+            ${renderPageCard(pages[0], 0, false, true)}
+          </div>
+        `;
+        i = 1;
+      }
+
+      // Pairs
+      while (i < pages.length) {
+        const leftPage = pages[i];
+        const rightPage = pages[i + 1] || null;
+        const lastSpreadIdx = rightPage ? (i + 1) : i;
+
+        html += `
+          <div class="spread-row">
+            ${renderPageCard(leftPage, i, true, false)}
+            <div class="spread-crease"></div>
+            ${rightPage ? renderPageCard(rightPage, i + 1, false, true) : '<div style="width:var(--page-w); min-width:var(--page-w); max-width:var(--page-w); height:var(--page-h);"></div>'}
+          </div>
+        `;
+
+        if (lastSpreadIdx < pages.length - 1) {
+          html += `
+            <div class="page-insert-strip" onclick="openInsertModal(${lastSpreadIdx})" title="Clique para inserir uma nova página aqui entre Pág ${lastSpreadIdx + 1} e Pág ${lastSpreadIdx + 2}">
+              <div class="insert-divider-line"></div>
+              <div class="insert-pill">➕ Inserir página entre Pág ${lastSpreadIdx + 1} e Pág ${lastSpreadIdx + 2}</div>
+              <div class="insert-divider-line"></div>
+            </div>
+          `;
+        }
+        i += 2;
+      }
+
+      container.innerHTML = html;
+      if (preserveScroll && scrollY > 0) {
+        window.scrollTo({ top: scrollY, behavior: 'instant' });
+      }
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    }
+
+    // RENDER SIDEBAR LOOKS LIST
+    function renderSidebarLooks(filterQuery = '') {
+      const list = document.getElementById('sidebarLooksList');
+      const q = filterQuery.toLowerCase().trim();
+
+      const filtered = LOOKS_DATA.filter(l => {
+        if (!q) return true;
+        return l.name1.toLowerCase().includes(q) ||
+               (l.name2 && l.name2.toLowerCase().includes(q)) ||
+               l.ref1.includes(q) ||
+               l.seq.toString().includes(q);
+      });
+
+      list.innerHTML = filtered.map(l => `
+        <div class="look-side-card">
+          <div class="look-side-header">
+            <span class="look-seq-pill">LOOK #${l.seq.toString().padStart(2, '0')}</span>
+            <span style="font-size:0.68rem; color:var(--text-dim);">Pág ${l.page} Col ${l.col}</span>
+          </div>
+          <div class="look-side-name">${l.name1}</div>
+          <div class="look-side-ref">${l.ref1} ${l.name2 ? ' • ' + l.name2 : ''}</div>
+          <div class="look-side-actions">
+            <button class="btn-side-add" onclick="addNewPage(null, createDefaultPageForLook(getLookBySeq(${l.seq})))">
+              ➕ Nova Página
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterSidebarLooks() {
+      const q = document.getElementById('lookSearchInput').value;
+      renderSidebarLooks(q);
+    }
+
+    // INDESIGN JSX GENERATOR
+    function generateInDesignJsxCode() {
+      if(!document.getElementById('jsxRootInput').value.trim()) throw Error('Informe a pasta da coleção no seu computador para exportar e revincular as fotos.');
+      assertPrintableFooters();
+      const planJs = pages.map((p, i) => {
+        const piecesCode = JSON.stringify(KallineReview.printed(p).map(({name,code,size}) => ({name:name.trim(),code:code.trim(),size:size.trim()})));
+        const sourcesCode = JSON.stringify(Object.fromEntries(GRID_SLOT_KEYS[p.type].map(key => [key, isRawPhotoSlot(p.slots[key]) ? 'raw' : 'treated'])));
+        if (p.type === 'look3') {
+          const front = (p.slots.front ? p.slots.front.file : '');
+          const topR = (p.slots.topRight ? p.slots.topRight.file : '');
+          const botR = (p.slots.bottomRight ? p.slots.bottomRight.file : '');
+          return `            // Pág ${i + 1}: Look #${p.lookNum} (${KallineReview.pieceText(p.pieces[0]).replace(/[\r\n\u2028\u2029]/g, " ")}) - Grid 3 Fotos (Hero Esq)\n            {\n                type: 'look', lookNum: ${p.lookNum},\n                pieces: ${piecesCode}, sources: ${sourcesCode},\n                front: '${front}', topRight: '${topR}', bottomRight: '${botR}'\n            }`;
+        } else if (p.type === 'look3_right') {
+          const hero = (p.slots.heroRight ? p.slots.heroRight.file : '');
+          const topL = (p.slots.topLeft ? p.slots.topLeft.file : '');
+          const botL = (p.slots.bottomLeft ? p.slots.bottomLeft.file : '');
+          return `            // Pág ${i + 1}: Look #${p.lookNum} (${KallineReview.pieceText(p.pieces[0]).replace(/[\r\n\u2028\u2029]/g, " ")}) - Grid 3 Fotos (Hero Dir)\n            {\n                type: 'look_right', lookNum: ${p.lookNum},\n                pieces: ${piecesCode}, sources: ${sourcesCode},\n                heroRight: '${hero}', topLeft: '${topL}', bottomLeft: '${botL}'\n            }`;
+        } else if (p.type === '2col') {
+          const c1 = (p.slots.col1 ? p.slots.col1.file : '');
+          const c2 = (p.slots.col2 ? p.slots.col2.file : '');
+          return `            // Pág ${i + 1}: Look #${p.lookNum} (${KallineReview.pieceText(p.pieces[0]).replace(/[\r\n\u2028\u2029]/g, " ")}) - Grid 2 Colunas\n            {\n                type: 'dupla_baixo_2col', lookNum: ${p.lookNum},\n                pieces: ${piecesCode}, sources: ${sourcesCode},\n                photo1: '${c1}', photo2: '${c2}'\n            }`;
+        } else if (p.type === '3col') {
+          const c1 = (p.slots.col1 ? p.slots.col1.file : '');
+          const c2 = (p.slots.col2 ? p.slots.col2.file : '');
+          const c3 = (p.slots.col3 ? p.slots.col3.file : '');
+          return `            // Pág ${i + 1}: Look #${p.lookNum} (${KallineReview.pieceText(p.pieces[0]).replace(/[\r\n\u2028\u2029]/g, " ")}) - Grid 3 Colunas (Parte de Baixo)\n            {\n                type: 'dupla_baixo_3col', lookNum: ${p.lookNum},\n                pieces: ${piecesCode}, sources: ${sourcesCode},\n                photo1: '${c1}', photo2: '${c2}', photo3: '${c3}'\n            }`;
+        } else if (p.type === 'estourada') {
+          const hero = (p.slots.hero ? p.slots.hero.file : '');
+          return `            // Pág ${i + 1}: Look #${p.lookNum} (${KallineReview.pieceText(p.pieces[0]).replace(/[\r\n\u2028\u2029]/g, " ")}) - Detalhe Estourado\n            {\n                type: 'estourada', lookNum: ${p.lookNum},\n                pieces: ${piecesCode}, sources: ${sourcesCode},\n                photo: '${hero}'\n            }`;
+        } else if (p.type === 'quad4') {
+          const s1 = (p.slots.slot1 ? p.slots.slot1.file : '');
+          const s2 = (p.slots.slot2 ? p.slots.slot2.file : '');
+          const s3 = (p.slots.slot3 ? p.slots.slot3.file : '');
+          const s4 = (p.slots.slot4 ? p.slots.slot4.file : '');
+          return `            // Pág ${i + 1}: Look #${p.lookNum} - Grid 4 Mosaico\n            {\n                type: 'quad4', lookNum: ${p.lookNum},\n                pieces: ${piecesCode}, sources: ${sourcesCode},\n                photo1: '${s1}', photo2: '${s2}', photo3: '${s3}', photo4: '${s4}'\n            }`;
+        }
+        return '';
+      }).filter(Boolean).join(',\n');
+
+      const hasRawPhotos = pages.some(page => GRID_SLOT_KEYS[page.type].some(key => page.slots[key]?.file && isRawPhotoSlot(page.slots[key])));
+      const rootInput = document.getElementById('jsxRootInput');
+      let customRoot = rootInput && rootInput.value.trim() 
+        ? rootInput.value.trim() 
+        : '';
+      if (!customRoot.endsWith('/')) customRoot += '/';
+
+      return `// SCRIPT EXTENDSCRIPT AUTOMATIZADO - KALLINE INVERNO 2027
+// Gerado automaticamente pelo Kalline Lookbook Studio
+#target indesign
+
+(function() {
+    var root = '${customRoot}';
+    var templatePath = root + '03 TEMPLATE BASE/LOOKBOOK VERAO 2027 - SUBLIME - completo.indd';
+    var outDir = root + '04 VERSOES LOOKBOOK/V03_STUDIO_EXPORT/';
+    var outIndd = outDir + 'LOOKBOOK INVERNO 2027 - STUDIO.indd';
+    var outPdf = outDir + 'LOOKBOOK INVERNO 2027 - STUDIO - Revisao.pdf';
+    var assetsPath = root + '02 FOTOS BAIXA RESOLUCAO/TRATADAS/';
+    var rawAssetsPath = root + '02 FOTOS BAIXA RESOLUCAO/BRUTAS/';
+    // Only required when a visible slot explicitly uses a raw photo preview.
+    if (${hasRawPhotos} && !Folder(rawAssetsPath).exists) {
+        var rawFolder = Folder.selectDialog('Selecione a pasta brutas das previas leves (nomes originais preservados)');
+        if (!rawFolder) return;
+        rawAssetsPath = rawFolder.fsName + '/';
+    }
+    // For later relinking, keep InDesign Preferences > File Handling >
+    // Preserve Image Dimensions When Relinking enabled (imagePreferences.preserveBounds).
+
+
+    var outFolder = new Folder(outDir);
+    if (!outFolder.exists) outFolder.create();
+
+    var tFile = File(templatePath);
+    if (!tFile.exists) {
+        alert('Template nao encontrado: ' + templatePath);
+        return;
+    }
+
+    var targetFile = File(outIndd);
+    if (targetFile.exists || File(outPdf).exists) {
+        alert("Destino ja existe; escolha outra pasta de exportacao. Nenhum arquivo foi substituido.");
+        return;
+    }
+    if (!tFile.copy(targetFile)) { alert("Falha ao copiar template"); return; }
+
+    var oldInteraction = app.scriptPreferences.userInteractionLevel;
+    app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+
+    try {
+        var doc = app.open(targetFile);
+        doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.POINTS;
+        doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.POINTS;
+        doc.viewPreferences.rulerOrigin = RulerOrigin.PAGE_ORIGIN;
+
+        // Limpar página 6 sobressalente do template
+        if (doc.pages.length >= 6) doc.pages[5].remove();
+
+        // PLANO DE PÁGINAS (${pages.length} PÁGINAS)
+        var pagesPlan = [
+${planJs}
+        ];
+
+        // Duplicar páginas: remover páginas extras do template para manter apenas a Página 1 padrão
+        while (doc.pages.length > 1) {
+            doc.pages[doc.pages.length - 1].remove();
+        }
+        var p1 = doc.pages[0];
+        while (doc.pages.length < pagesPlan.length) {
+            p1.duplicate(LocationOptions.AT_END);
+        }
+
+        function placePhoto(rect, filename, source) {
+            if (!filename) return;
+            var f = File((source === 'raw' ? rawAssetsPath : assetsPath) + filename);
+            if (!f.exists) {
+                // Tentar pasta bruta
+                f = File(root + '01 FOTOS ORIGINAIS/1 FOTOS/1 LB/1 TODAS/' + filename);
+            }
+            if (f.exists) {
+                rect.place(f);
+                rect.fit(FitOptions.FILL_PROPORTIONALLY);
+                rect.fit(FitOptions.CENTER_CONTENT);
+            }
+        }
+
+        function formatNameRef(tf, name, code) {
+            var nameClean = name.toUpperCase().replace(/\\s+/g, ' ').replace(/^\\s+|\\s+$/g, '');
+            var codeClean = code ? code.replace(/^\\s+|\\s+$/g, '') : '';
+            var fullText = nameClean && codeClean ? (nameClean + ' - ' + codeClean) : (nameClean || codeClean);
+            tf.contents = fullText;
+            tf.recompose();
+            try {
+                var p = tf.paragraphs[0];
+                p.pointSize = 10;
+                p.leading = 17;
+                p.tracking = 250;
+                p.capitalization = Capitalization.ALL_CAPS;
+                p.justification = Justification.LEFT_ALIGN;
+                p.characters.itemByRange(0, nameClean.length - 1).fontStyle = 'Bold';
+                if (codeClean) {
+                    p.characters.itemByRange(nameClean.length, fullText.length - 1).fontStyle = 'Medium';
+                }
+            } catch(e) {}
+        }
+
+        function formatSize(tf, size) {
+            tf.contents = size;
+            tf.recompose();
+            try {
+                var p = tf.paragraphs[0];
+                p.pointSize = 10;
+                p.leading = 17;
+                p.tracking = 250;
+                p.justification = Justification.LEFT_ALIGN;
+                p.characters.everyItem().fontStyle = 'Bold';
+            } catch(e) {}
+        }
+
+        var dividerColor=doc.colors.add({name:"Kalline Divider Conferencia",model:ColorModel.PROCESS,space:ColorSpace.CMYK,colorValue:[0,0,0,35]});
+        // Montagem das páginas
+        for (var i = 0; i < pagesPlan.length; i++) {
+            var plan = pagesPlan[i];
+            var page = doc.pages[i];
+
+            if (plan.type === 'look') {
+                var rects = [];
+                for (var r = 0; r < page.rectangles.length; r++) rects.push(page.rectangles[r]);
+                rects.sort(function(a, b) { return a.geometricBounds[1] - b.geometricBounds[1]; });
+
+                if (rects.length >= 1) placePhoto(rects[0], plan.front, plan.sources.front);
+                if (rects.length >= 3) {
+                    var rights = [rects[1], rects[2]];
+                    rights.sort(function(a, b) { return a.geometricBounds[0] - b.geometricBounds[0]; });
+                    placePhoto(rights[0], plan.topRight, plan.sources.topRight);
+                    placePhoto(rights[1], plan.bottomRight, plan.sources.bottomRight);
+                } else if (rects.length >= 2) {
+                    placePhoto(rects[1], plan.topRight, plan.sources.topRight);
+                }
+
+            } else if (plan.type === 'dupla_baixo_2col') {
+                var rects = [];
+                for (var r = 0; r < page.rectangles.length; r++) rects.push(page.rectangles[r]);
+                rects.sort(function(a, b) { return a.geometricBounds[1] - b.geometricBounds[1]; });
+
+                rects[0].geometricBounds = [34.015, 34.015, 759.685, 290.551];
+                rects[1].geometricBounds = [34.015, 304.724, 759.685, 561.259];
+                if (rects.length >= 3) rects[2].remove();
+
+                placePhoto(rects[0], plan.photo1, plan.sources[plan.type === 'quad4' ? 'slot1' : 'col1']);
+                placePhoto(rects[1], plan.photo2, plan.sources[plan.type === 'quad4' ? 'slot2' : 'col2']);
+
+            } else if (plan.type === 'dupla_baixo_3col') {
+                var rects = [];
+                for (var r = 0; r < page.rectangles.length; r++) rects.push(page.rectangles[r]);
+                rects.sort(function(a, b) { return a.geometricBounds[1] - b.geometricBounds[1]; });
+
+                rects[0].geometricBounds = [34.015, 34.015, 759.685, 205.035];
+                rects[1].geometricBounds = [34.015, 212.122, 759.685, 383.142];
+                if (rects.length >= 3) {
+                    rects[2].geometricBounds = [34.015, 390.229, 759.685, 561.259];
+                }
+                placePhoto(rects[0], plan.photo1, plan.sources[plan.type === 'quad4' ? 'slot1' : 'col1']);
+                placePhoto(rects[1], plan.photo2, plan.sources[plan.type === 'quad4' ? 'slot2' : 'col2']);
+                if (rects.length >= 3) placePhoto(rects[2], plan.photo3, plan.sources[plan.type === 'quad4' ? 'slot3' : 'col3']);
+
+            } else if (plan.type === 'estourada') {
+                var rects = [];
+                for (var r = 0; r < page.rectangles.length; r++) rects.push(page.rectangles[r]);
+                rects.sort(function(a, b) { return a.geometricBounds[1] - b.geometricBounds[1]; });
+
+                rects[0].geometricBounds = [34.015, 34.015, 759.685, 561.259];
+                placePhoto(rects[0], plan.photo, plan.sources.hero);
+                for (var d = 1; d < rects.length; d++) rects[d].remove();
+
+            } else if (plan.type === 'look_right') {
+                var rects = [];
+                for (var r = 0; r < page.rectangles.length; r++) rects.push(page.rectangles[r]);
+                rects.sort(function(a, b) { return a.geometricBounds[1] - b.geometricBounds[1]; });
+
+                rects[0].geometricBounds = [34.015, 34.015, 428.0, 245.28];
+                rects[1].geometricBounds = [435.5, 34.015, 759.685, 245.28];
+                if (rects.length >= 3) {
+                    rects[2].geometricBounds = [34.015, 252.98, 759.685, 561.259];
+                }
+                placePhoto(rects[0], plan.topLeft, plan.sources.topLeft);
+                placePhoto(rects[1], plan.bottomLeft, plan.sources.bottomLeft);
+                if (rects.length >= 3) placePhoto(rects[2], plan.heroRight, plan.sources.heroRight);
+
+            } else if (plan.type === 'quad4') {
+                var rects = [];
+                for (var r = 0; r < page.rectangles.length; r++) rects.push(page.rectangles[r]);
+                rects.sort(function(a, b) { return a.geometricBounds[1] - b.geometricBounds[1]; });
+
+                rects[0].geometricBounds = [34.015, 34.015, 393.35, 290.551];
+                rects[1].geometricBounds = [34.015, 304.724, 393.35, 561.259];
+                if (rects.length >= 3) {
+                    rects[2].geometricBounds = [400.35, 34.015, 759.685, 290.551];
+                    var rect3 = rects[2].duplicate();
+                    rect3.geometricBounds = [400.35, 304.724, 759.685, 561.259];
+                    placePhoto(rects[0], plan.photo1, plan.sources[plan.type === 'quad4' ? 'slot1' : 'col1']);
+                    placePhoto(rects[1], plan.photo2, plan.sources[plan.type === 'quad4' ? 'slot2' : 'col2']);
+                    placePhoto(rects[2], plan.photo3, plan.sources[plan.type === 'quad4' ? 'slot3' : 'col3']);
+                    placePhoto(rect3, plan.photo4, plan.sources[plan.type === 'quad4' ? 'slot4' : 'col4']);
+                }
+            }
+
+            // Brasao oficial e divisoria: elementos do master original estavam fora do corte.
+            var crest=page.rectangles.add({geometricBounds:[774,92.54935,798.09784,116.64719],strokeWeight:0});
+            crest.label="KALLINE_BRASAO_DERIVADA";crest.place(File(root+"00 FONTES E DADOS/brasao_kalline.png"));crest.fit(FitOptions.PROPORTIONALLY);crest.fit(FitOptions.CENTER_CONTENT);
+            var divider=page.graphicLines.add({geometricBounds:[774,432.5,798.09784,432.5],strokeWeight:0.25});divider.label="KALLINE_DIVISORIA_DERIVADA";divider.strokeColor=dividerColor;divider.strokeTint=100;
+
+            // Formatar legendas usando caixas originais do template
+            var tfs = [];
+            for (var t = 0; t < page.textFrames.length; t++) tfs.push(page.textFrames[t]);
+            tfs.sort(function(a, b) { return a.geometricBounds[1] - b.geometricBounds[1]; });
+
+            var customFooter=!plan.pieces.length || plan.pieces.length>=3, hasSize=false;
+            for(var q=0;q<plan.pieces.length;q++){if(!plan.pieces[q].size || !plan.pieces[q].name || !plan.pieces[q].code)customFooter=true;if(plan.pieces[q].size)hasSize=true;}
+            if (customFooter) {
+                for (var q=tfs.length-1;q>=0;q--) tfs[q].remove();
+                var compact=plan.pieces.length>=3, rowTop=plan.pieces.length<=1?781.10:(compact?768:774), rowStep=compact?15:17;
+                if(plan.pieces.length>4) throw Error("Mais de quatro legendas, pagina "+(i+1));
+                if(!plan.pieces.length) { crest.remove(); divider.remove(); }
+                else if(!hasSize) divider.remove();
+                for(var q=0;q<plan.pieces.length;q++) {
+                    var item=plan.pieces[q], y=rowTop+q*rowStep, h=compact?14:24;
+                    if(item.name || item.code) {
+                        var nf=page.textFrames.add({geometricBounds:[y,131.102362204634,y+h,425]});
+                        nf.label="KALLINE_LEGENDA_REVISAO";formatNameRef(nf,item.name,item.code);
+                        if(compact){nf.paragraphs[0].pointSize=9;nf.paragraphs[0].leading=11;nf.paragraphs[0].tracking=100;}
+                    }
+                    if(item.size) {
+                        var sf=page.textFrames.add({geometricBounds:[y,442,y+h,559.27559]});
+                        sf.label="KALLINE_LEGENDA_REVISAO";formatSize(sf,item.size);
+                        if(compact){sf.paragraphs[0].pointSize=9;sf.paragraphs[0].leading=11;sf.paragraphs[0].tracking=100;}
+                    }
+                }
+            } else if (plan.pieces && plan.pieces.length === 1 && tfs.length >= 2) {
+                // Template tem 2 linhas nome/ref e 2 linhas de grade. Selecionar por coluna/altura.
+                var names = [], sizes = [];
+                for (var q=0;q<tfs.length;q++) {
+                    if (tfs[q].geometricBounds[1] < 400) names.push(tfs[q]); else sizes.push(tfs[q]);
+                }
+                names.sort(function(a,b){return a.geometricBounds[0]-b.geometricBounds[0];});
+                sizes.sort(function(a,b){return a.geometricBounds[0]-b.geometricBounds[0];});
+                if (!names.length || !sizes.length) throw Error("Rodape nao reconhecido, pagina " + (i+1));
+                var nameF=names[0], sizeF=sizes[0];
+                for(var q=1;q<names.length;q++) names[q].remove();
+                for(var q=1;q<sizes.length;q++) sizes[q].remove();
+                nameF.geometricBounds=[781.10,131.102362204634,801.10,425.0];
+                sizeF.geometricBounds=[781.10,442.0,801.10,559.27559];
+                formatNameRef(nameF,plan.pieces[0].name,plan.pieces[0].code);
+                formatSize(sizeF,plan.pieces[0].size);
+            } else if (plan.pieces && plan.pieces.length >= 2) {
+                if (tfs.length >= 4) {
+                    var nameFrames = [tfs[0], tfs[1]];
+                    var sizeFrames = [tfs[2], tfs[3]];
+                    nameFrames.sort(function(a, b) { return a.geometricBounds[0] - b.geometricBounds[0]; });
+                    sizeFrames.sort(function(a, b) { return a.geometricBounds[0] - b.geometricBounds[0]; });
+                    var nmGb0 = nameFrames[0].geometricBounds;
+                    nameFrames[0].geometricBounds = [nmGb0[0], nmGb0[1], nmGb0[2], 425.0];
+                    var nmGb1 = nameFrames[1].geometricBounds;
+                    nameFrames[1].geometricBounds = [nmGb1[0], nmGb1[1], nmGb1[2], 425.0];
+                    var szGb0 = sizeFrames[0].geometricBounds;
+                    sizeFrames[0].geometricBounds = [szGb0[0], 442.0, szGb0[2], 559.27559];
+                    var szGb1 = sizeFrames[1].geometricBounds;
+                    sizeFrames[1].geometricBounds = [szGb1[0], 442.0, szGb1[2], 559.27559];
+
+                    formatNameRef(nameFrames[0], plan.pieces[0].name, plan.pieces[0].code);
+                    formatSize(sizeFrames[0], plan.pieces[0].size);
+                    formatNameRef(nameFrames[1], plan.pieces[1].name, plan.pieces[1].code);
+                    formatSize(sizeFrames[1], plan.pieces[1].size);
+                } else if (tfs.length >= 2) {
+                    var nameTf1 = tfs[0];
+                    var sizeTf1 = tfs[1];
+                    nameTf1.move(undefined, [0, -7.955]);
+                    sizeTf1.move(undefined, [0, -7.955]);
+                    var nmGb1 = nameTf1.geometricBounds;
+                    nameTf1.geometricBounds = [nmGb1[0], nmGb1[1], nmGb1[2], 425.0];
+                    var szGb1 = sizeTf1.geometricBounds;
+                    sizeTf1.geometricBounds = [szGb1[0], 442.0, szGb1[2], 559.27559];
+
+                    var nameTf2 = nameTf1.duplicate();
+                    var sizeTf2 = sizeTf1.duplicate();
+                    nameTf2.move(undefined, [0, 15.131]);
+                    sizeTf2.move(undefined, [0, 15.131]);
+                    var nmGb2 = nameTf2.geometricBounds;
+                    nameTf2.geometricBounds = [nmGb2[0], nmGb2[1], nmGb2[2], 425.0];
+                    var szGb2 = sizeTf2.geometricBounds;
+                    sizeTf2.geometricBounds = [szGb2[0], 442.0, szGb2[2], 559.27559];
+
+                    formatNameRef(nameTf1, plan.pieces[0].name, plan.pieces[0].code);
+                    formatSize(sizeTf1, plan.pieces[0].size);
+                    formatNameRef(nameTf2, plan.pieces[1].name, plan.pieces[1].code);
+                    formatSize(sizeTf2, plan.pieces[1].size);
+                }
+            }
+        }
+
+        doc.recompose();
+        var overflow=[];
+        for(var pi=0;pi<doc.pages.length;pi++) {
+            var pg=doc.pages[pi];
+            for(var ti=0;ti<pg.textFrames.length;ti++) {
+                var tf=pg.textFrames[ti], gb=tf.geometricBounds;
+                if(tf.label!=="KALLINE_LEGENDA_REVISAO") tf.geometricBounds=[gb[0],gb[1],gb[0]+24,gb[3]];
+                tf.recompose();
+                if(tf.overflows) overflow.push("P"+(pi+1)+" "+tf.contents);
+            }
+        }
+        doc.recompose();
+        var missing=[];for(var li=0;li<doc.links.length;li++) if(doc.links[li].status==LinkStatus.LINK_MISSING)missing.push(doc.links[li].name);
+        if(overflow.length)throw Error("Rodapes excedem caixas: "+overflow.join(" | "));
+        if(missing.length)throw Error("Fotos ausentes: "+missing.join(" | "));
+        doc.save();
+        doc.exportFile(ExportFormat.PDF_TYPE, File(outPdf));
+        doc.close(SaveOptions.YES);
+
+        alert('Lookbook gerado com sucesso!\\nTotal de Páginas: ' + pagesPlan.length + '\\nArquivo: ' + outPdf);
+    } catch(err) {
+        alert('Erro: ' + err.message);
+    } finally {
+        app.scriptPreferences.userInteractionLevel = oldInteraction;
+    }
+})();
+`;
+    }
+
+    function updateJsxCodePreview() {
+      const code = generateInDesignJsxCode();
+      const view = document.getElementById('jsxCodeView');
+      if (view) view.innerText = code;
+    }
+
+    function openJsxExportModal() {
+      document.getElementById('jsxExportModal').classList.add('open');try { updateJsxCodePreview(); } catch(error) { document.getElementById('jsxCodeView').innerText=error.message; }
+      document.getElementById('jsxExportModal').classList.add('open');
+    }
+
+    function closeJsxExportModal() {
+      document.getElementById('jsxExportModal').classList.remove('open');
+    }
+
+    function copyJsxToClipboard() {
+      const code = generateInDesignJsxCode();
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('Código JSX copiado para a área de transferência!');
+      });
+    }
+
+    function downloadJsxFile() {
+      const code = generateInDesignJsxCode();
+      const blob = new Blob([code], { type: 'application/javascript;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `gerar_lookbook_kalline_${pages.length}_pags.jsx`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Arquivo .jsx baixado!');
+    }
+
+    function copyIaPromptInstruction() {
+      const summary = `Execute o script InDesign gerado a partir do Lookbook Studio para montar as ${pages.length} páginas do catálogo Kalline Inverno 2027. O plano contém ${pages.length} páginas configuradas visualmente com fotos e legendas.`;
+      navigator.clipboard.writeText(summary).then(() => {
+        showToast('Instrução para IA copiada!');
+      });
+    }
+
+    function downloadJsonPlan() {
+      const jsonStr = JSON.stringify(pages, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `kalline_lookbook_plano_${pages.length}_pags.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Plano salvo como JSON!');
+    }
+
+    // Validate the entire plan before replacing or persisting the current work.
+    function validatePlan(plan) {
+      const types = ['look3', 'look3_right', '2col', '3col', 'quad4', 'estourada'];
+      const validSlot = slot => slot === null || (slot && typeof slot.file === 'string' &&
+        (slot.pos === undefined || ['top', 'center', 'bottom'].includes(slot.pos)) &&
+        (slot.source === undefined || ['raw', 'treated'].includes(slot.source)));
+      const ids = new Set();
+      if (!Array.isArray(plan) || plan.length === 0 || plan.length > 500 || JSON.stringify(plan).length > 1000000) throw new Error('O plano precisa conter pelo menos uma página.');
+      for (const page of plan) {
+        if (!page || typeof page.id !== 'string' || !/^[a-zA-Z0-9_-]+$/.test(page.id) || ids.has(page.id) ||
+            !types.includes(page.type) || !LOOKS_DATA.some(look => look.seq === page.lookNum) ||
+            !Array.isArray(page.pieces) || page.pieces.length === 0 ||
+            !page.pieces.every(piece => piece && ['name', 'code', 'size'].every(key => typeof piece[key] === 'string')) ||
+            !page.slots || typeof page.slots !== 'object' || Array.isArray(page.slots) ||
+            !Object.values(page.slots).every(validSlot) ||
+            (page.gridOverflow !== undefined && (!Array.isArray(page.gridOverflow) ||
+              GRID_SLOT_KEYS[page.type].length + page.gridOverflow.length > 4 || !page.gridOverflow.every(validSlot))) ||
+            (page.legacyGridSlots !== undefined && (!page.legacyGridSlots ||
+              typeof page.legacyGridSlots !== 'object' || Array.isArray(page.legacyGridSlots) ||
+              !Object.values(page.legacyGridSlots).every(validSlot)))) {
+          throw new Error('Página inválida: confira identificador único, grid, look, peças e fotos.');
+        }
+        ids.add(page.id);
+      }
+      plan.forEach(page => KallineReview.validate(page));
+      return plan;
+    }
+
+    function handleJsonFileSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const imported = validatePlan(JSON.parse(e.target.result));
+          if (Array.isArray(imported) && imported.length > 0) {
+            if (!confirm('Carregar este JSON substituirá o plano atual. Deseja continuar?')) return;
+            pages = imported;
+            saveState();
+            renderAllPages(true);
+            showToast(`Plano carregado com sucesso! (${pages.length} páginas)`);
+          } else {
+            alert('Formato de arquivo JSON inválido. É esperado um arquivo de plano com a lista de páginas do catálogo.');
+          }
+        } catch (err) {
+          alert('Erro ao processar arquivo JSON: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function exportJsonPlan() {
+      const jsonStr = JSON.stringify(pages, null, 2);
+      navigator.clipboard.writeText(jsonStr).then(() => {
+        showToast('Plano de páginas (JSON) copiado!');
+      });
+    }
+
+    let sharedVersionsPanel = null;
+    function initializeSharedVersions() {
+      // The server controls shared-version identity. Local editor login/storage is never used as API authorization.
+      import('./versions/panel.mjs').then(({ mountVersionPanel }) => {
+        if (sharedVersionsPanel) return;
+        sharedVersionsPanel = mountVersionPanel({
+          toolbar: document.querySelector('.header-actions'),
+          getPlan: () => pages,
+          applyPlan: imported => {
+            const next = validatePlan(structuredClone(imported));
+            const previous = { pages, undo: [...undoStack], redo: [...redoStack], snapshot: currentPlanSnapshot };
+            closeReviewDialog();
+            closePhotoPickerModal();
+            closeInsertModal();
+            closeDesdobrarModal();
+            closeJsxExportModal();
+            draggedSlotData = null;
+            try {
+              pages = next;
+              saveState(); // One reversible editor operation; shared history does not replace the ten-step undo stack.
+            } catch (error) {
+              pages = previous.pages;
+              undoStack = previous.undo;
+              redoStack = previous.redo;
+              currentPlanSnapshot = previous.snapshot;
+              updateHistoryControls();
+              throw new Error('Não foi possível salvar localmente. O plano anterior foi mantido.');
+            }
+            renderAllPages(true);
+            showToast(`Versão compartilhada carregada (${pages.length} páginas).`);
+          }
+        });
+        groupCatalogActions();
+      }).catch(() => showToast('Versões compartilhadas indisponíveis neste ambiente. O plano local foi preservado.'));
+    }
+
+    // INITIALIZATION
+    window.onload=()=>window.dispatchEvent(new Event('kalline-editor-ready'));
+  </script>
+  <script src="review/editor.js"></script>
+<script type="module" src="neon-client.js"></script></body>
+</html>
