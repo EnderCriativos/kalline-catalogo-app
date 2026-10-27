@@ -1549,8 +1549,8 @@
       padding-top: 14px;
     }
 </style>
-  <link rel="stylesheet" href="review/editor.css">
-<meta name="referrer" content="no-referrer"><link rel="stylesheet" href="neon-login.css"></head>
+  <link rel="stylesheet" href="review/editor.css?v=115c0e561122">
+<meta name="referrer" content="no-referrer"><link rel="stylesheet" href="neon-login.css?v=73051c5acd49"></head>
 <body>
 
 <div id="loginGate" class="login-gate" style="display:flex"><section class="login-card" aria-label="Entrar no catálogo"><h1>Kalline · Inverno 2027</h1><p>Entre para revisar o catálogo e salvar versões.</p><form id="neonEmailForm"><label for="neonEmail">E-mail autorizado</label><input id="neonEmail" type="email" autocomplete="email" required><button type="submit">Enviar código</button></form><form id="neonOtpForm" hidden><label for="neonOtp">Código recebido por e-mail</label><input id="neonOtp" inputmode="numeric" autocomplete="one-time-code" required><button type="submit">Entrar</button></form><button id="neonImportButton" type="button" hidden>Preparar prévias privadas</button><p id="neonLoginStatus" role="status">Conferindo sessão…</p></section></div>
@@ -1809,7 +1809,7 @@
   </div>
 
   <!-- APP SCRIPTS & DATA -->
-  <script src="review/model.js"></script>
+  <script src="review/model.js?v=15c5b9c85c09"></script>
   <script>
 
     // ==========================================
@@ -3376,7 +3376,7 @@ ${planJs}
     let sharedVersionsPanel = null;
     function initializeSharedVersions() {
       // The server controls shared-version identity. Local editor login/storage is never used as API authorization.
-      import('./versions/panel.mjs').then(({ mountVersionPanel }) => {
+      import('./versions/panel.mjs?v=8b37560de4b3').then(({ mountVersionPanel }) => {
         if (sharedVersionsPanel) return;
         sharedVersionsPanel = mountVersionPanel({
           toolbar: document.querySelector('.header-actions'),
@@ -3412,6 +3412,6 @@ ${planJs}
     // INITIALIZATION
     window.onload=()=>window.dispatchEvent(new Event('kalline-editor-ready'));
   </script>
-  <script src="review/editor.js"></script>
-<script type="module" src="neon-client.js"></script></body>
+  <script src="review/editor.js?v=f8ca81008daf"></script>
+<script type="module" src="neon-client.js?v=c2e7af846048"></script></body>
 </html>

@@ -1,4 +1,4 @@
-import { SharedVersions } from './client.mjs';
+import { SharedVersions } from './client.mjs?v=6e96fd451c06';
 
 export function mountVersionPanel({ toolbar, getPlan, applyPlan, confirmLoad }) {
   const make=(tag,text)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=text;return el;};
